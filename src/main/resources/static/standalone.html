@@ -2091,10 +2091,13 @@ body {
             <div class="voice-sample-actions">
                 <span class="sample-label">Or click to test voice command:</span>
                 <div class="sample-chips">
-                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to cart')">Add Sony Headphones</button>
-                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Show mechanical keyboards')">Show Keyboards</button>
-                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">What's in my cart?</button>
-                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">Checkout Now</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Search wireless headphones')">🎧 Search Headphones</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Find Apple MacBook')">💻 Find MacBook</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Show mechanical keyboards')">⌨️ Show Keyboards</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to cart')">🛒 Add Sony to Cart</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">📦 What's in my cart?</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('What discount coupons do you have?')">🏷️ Discount Coupons</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">💳 Checkout Now</button>
                 </div>
             </div>
         </div>
@@ -3169,13 +3172,44 @@ const chatAssistant = {
             };
         }
 
-        // 5. Recommendations / Search
-        const recs = SEED_PRODUCTS.slice(0, 3);
+        // 5. Dynamic Product Search & Recommendations
+        let cleanQuery = text;
+        cleanQuery = cleanQuery.replace(/^(can you |please |could you |hey |hi |ok |assistant |tell me |help me )+/gi, '');
+        cleanQuery = cleanQuery.replace(/^(search for|search|find me|find|show me|show|look for|look up|browse|get me|i want to see|i want|do you have|where is|where are|display)\s+/gi, '');
+        cleanQuery = cleanQuery.replace(/\s+(dikhao|khojo|dhundo|batao|dekho|search karo|chahiye)$/gi, '');
+        cleanQuery = cleanQuery.replace(/^(dikhao|khojo|dhundo|batao)\s+/gi, '');
+        cleanQuery = cleanQuery.replace(/[?!.,;]/g, '').trim();
+
+        const tokens = cleanQuery.split(/\s+/).filter(t => t.length > 1);
+        let matches = [];
+        if (tokens.length > 0) {
+            matches = SEED_PRODUCTS.filter(p => {
+                const pText = (p.name + " " + p.category + " " + p.description + " " + p.tags.join(" ")).toLowerCase();
+                return tokens.some(tok => pText.includes(tok));
+            });
+        }
+
+        if (matches.length > 0) {
+            return {
+                message: `Found **${matches.length}** product(s) matching '**${cleanQuery}**':`,
+                action: 'SHOW_PRODUCTS',
+                data: matches,
+                suggestions: [matches[0].name.slice(0, 22), 'View Cart', 'Checkout']
+            };
+        } else if (cleanQuery.length > 1) {
+            return {
+                message: `No products found matching '**${cleanQuery}**'. Try searching for **headphones**, **MacBook**, or **keyboard**. Here are our top featured items:`,
+                action: 'SHOW_RECOMMENDATIONS',
+                data: SEED_PRODUCTS.slice(0, 3),
+                suggestions: ['Show Headphones', 'Show MacBook', 'Browse Keyboards']
+            };
+        }
+
         return {
-            message: `Here are our top recommended products for you:`,
+            message: `Welcome to **IndusXCart**! Here are our top recommendations for you:`,
             action: 'SHOW_RECOMMENDATIONS',
-            data: recs,
-            suggestions: ['Add Sony headphones', 'Show Laptops', 'What is in my cart?']
+            data: SEED_PRODUCTS.slice(0, 3),
+            suggestions: ['Search Headphones', 'Show MacBook', 'What is in my cart?']
         };
     },
 
@@ -3341,11 +3375,14 @@ const voiceAssistant = {
 
     async processTranscript(transcript) {
         const statusEl = document.getElementById('voiceStatus');
-        if (statusEl) statusEl.textContent = 'Assistant analyzing voice command... ⚡';
+        if (statusEl) statusEl.textContent = 'IndusX Assistant analyzing voice command... ⚡';
 
         let spoken = "";
         let action = "";
+        let cleanQuery = "";
+        let searchMatches = [];
 
+        // Try cloud backend first
         if (isBackendAvailable) {
             try {
                 const res = await fetch(`${API_BASE}/api/ai/voice`, {
@@ -3357,33 +3394,165 @@ const voiceAssistant = {
                     const data = await res.json();
                     spoken = data.spokenResponse;
                     action = data.action;
+                    cleanQuery = data.query || "";
+                    searchMatches = data.data || [];
                 }
-            } catch (err) {}
-        }
-
-        // Local speech fallback
-        if (!spoken) {
-            const clean = transcript.toLowerCase();
-            if (clean.includes('add') && (clean.includes('sony') || clean.includes('headphone'))) {
-                cartManager.addItem('PROD-AUDIO-01', 1);
-                spoken = "I've added Sony Wireless Headphones to your cart. Your new subtotal is $" + cartManager.cart.subtotal.toFixed(2) + ".";
-                action = "CART_UPDATED";
-            } else if (clean.includes('keyboard')) {
-                cartManager.addItem('PROD-OFF-02', 1);
-                spoken = "I've added Keychron Mechanical Keyboard to your cart.";
-                action = "CART_UPDATED";
-            } else if (clean.includes('cart')) {
-                spoken = "You have " + cartManager.cart.totalItemCount + " items in your cart with a total of $" + cartManager.cart.total.toFixed(2) + ".";
-                action = "VIEW_CART";
-            } else if (clean.includes('checkout')) {
-                spoken = "You are ready for checkout. Opening checkout form now.";
-                action = "OPEN_CHECKOUT";
-            } else {
-                spoken = "I found products matching your request. Let me know if you would like me to add anything.";
-                action = "NONE";
+            } catch (err) {
+                console.warn("Backend voice API unavailable, using local voice intelligence:", err);
             }
         }
 
+        // Local Voice Intelligence (runs instantly with dynamic search reading!)
+        if (!spoken) {
+            const raw = transcript.trim();
+            const lower = raw.toLowerCase();
+
+            // 1. ADD TO CART INTENT
+            const isAdd = lower.includes('add') || lower.includes('buy') || lower.includes('daalo') || lower.includes('kharido') || lower.includes('cart mein');
+            if (isAdd && (lower.includes('add') || lower.includes('buy') || lower.includes('daalo') || lower.includes('kharido'))) {
+                let bestMatch = null;
+                for (const p of SEED_PRODUCTS) {
+                    const pName = p.name.toLowerCase();
+                    if (lower.includes(pName) || p.tags.some(t => lower.includes(t.toLowerCase()))) {
+                        bestMatch = p;
+                        break;
+                    }
+                }
+                if (!bestMatch) {
+                    for (const p of SEED_PRODUCTS) {
+                        const words = p.name.toLowerCase().split(/\s+/);
+                        if (words.some(w => w.length > 3 && lower.includes(w))) {
+                            bestMatch = p;
+                            break;
+                        }
+                    }
+                }
+
+                if (bestMatch) {
+                    const qtyMatch = lower.match(/\b([1-9]|one|two|three|four|five)\b/);
+                    let qty = 1;
+                    if (qtyMatch) {
+                        const numWord = qtyMatch[1];
+                        const map = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+                        qty = map[numWord] || parseInt(numWord, 10) || 1;
+                    }
+                    cartManager.addItem(bestMatch.id, qty);
+                    spoken = `Added ${qty > 1 ? qty + ' ' : ''}${bestMatch.name} to your cart. Your new cart total is $${cartManager.cart.total.toFixed(2)}. Would you like to checkout?`;
+                    action = "CART_UPDATED";
+                } else {
+                    spoken = `I couldn't identify which product you want to add. Please specify the name, like "Add Sony headphones to cart".`;
+                    action = "NONE";
+                }
+            }
+            // 2. VIEW CART INTENT
+            else if (lower.includes('cart') && (lower.includes('what') || lower.includes('show') || lower.includes('view') || lower.includes('check') || lower.includes('kya') || lower.includes('dikhao') || lower.includes('in my') || lower.trim() === 'cart')) {
+                if (cartManager.cart.items.length === 0) {
+                    spoken = "Your shopping cart is currently empty. You can ask me to search for headphones, MacBook, or gaming gear!";
+                } else {
+                    const itemsDesc = cartManager.cart.items.slice(0, 2).map(i => `${i.quantity}x ${i.productName}`).join(' and ');
+                    spoken = `You have ${cartManager.cart.totalItemCount} items in your cart including ${itemsDesc}. Your total is $${cartManager.cart.total.toFixed(2)}.`;
+                }
+                action = "VIEW_CART";
+            }
+            // 3. CHECKOUT INTENT
+            else if (lower.includes('checkout') || lower.includes('place order') || lower.includes('pay') || lower.includes('order karo')) {
+                if (cartManager.cart.items.length === 0) {
+                    spoken = "Your cart is currently empty. Please add items before checking out.";
+                    action = "NONE";
+                } else {
+                    spoken = `Ready for checkout! Opening secure payment for your ${cartManager.cart.totalItemCount} items totaling $${cartManager.cart.total.toFixed(2)}.`;
+                    action = "OPEN_CHECKOUT";
+                }
+            }
+            // 4. COUPON / DEALS INTENT
+            else if (lower.includes('coupon') || lower.includes('discount') || lower.includes('offer') || lower.includes('deal') || lower.includes('promo') || lower.includes('save20') || lower.includes('welcome10')) {
+                if (lower.includes('save20')) {
+                    const input = document.getElementById('couponInput');
+                    if (input) input.value = 'SAVE20';
+                    cartManager.applyCoupon();
+                    spoken = `Applied coupon SAVE20! You saved $${cartManager.cart.discountAmount.toFixed(2)}. Your new total is $${cartManager.cart.total.toFixed(2)}.`;
+                    action = "CART_UPDATED";
+                } else if (lower.includes('welcome10')) {
+                    const input = document.getElementById('couponInput');
+                    if (input) input.value = 'WELCOME10';
+                    cartManager.applyCoupon();
+                    spoken = `Applied coupon WELCOME10 for 10% off! Your new total is $${cartManager.cart.total.toFixed(2)}.`;
+                    action = "CART_UPDATED";
+                } else {
+                    spoken = "We have two active coupons: WELCOME10 for 10% off, and SAVE20 for $20 off on orders over $100. Say 'Apply coupon SAVE20' to use it!";
+                    action = "NONE";
+                }
+            }
+            // 5. CLEAR CART
+            else if (lower.includes('clear cart') || lower.includes('empty cart') || lower.includes('cart khali')) {
+                cartManager.clearCart();
+                spoken = "I have emptied your shopping cart.";
+                action = "CART_UPDATED";
+            }
+            // 6. DYNAMIC VOICE SEARCH INTENT (Reads current search results aloud!)
+            else {
+                cleanQuery = lower;
+                cleanQuery = cleanQuery.replace(/^(can you |please |could you |hey |hi |ok |assistant |tell me |help me )+/gi, '');
+                cleanQuery = cleanQuery.replace(/^(search for|search|find me|find|show me|show|look for|look up|browse|get me|i want to see|i want|do you have|where is|where are|display)\s+/gi, '');
+                cleanQuery = cleanQuery.replace(/\s+(dikhao|khojo|dhundo|batao|dekho|search karo|chahiye)$/gi, '');
+                cleanQuery = cleanQuery.replace(/^(dikhao|khojo|dhundo|batao)\s+/gi, '');
+                cleanQuery = cleanQuery.replace(/[?!.,;]/g, '').trim();
+
+                const tokens = cleanQuery.split(/\s+/).filter(t => t.length > 1);
+                let matches = [];
+                if (tokens.length > 0) {
+                    matches = SEED_PRODUCTS.filter(p => {
+                        const pText = (p.name + " " + p.category + " " + p.description + " " + p.tags.join(" ")).toLowerCase();
+                        return tokens.some(tok => pText.includes(tok));
+                    });
+                }
+
+                if (matches.length > 0) {
+                    searchMatches = matches;
+                    if (matches.length === 1) {
+                        const m = matches[0];
+                        spoken = `I found 1 product for "${cleanQuery}": ${m.name} for $${m.price.toFixed(2)}. It has a rating of ${m.rating} stars. Showing it on your screen now!`;
+                    } else if (matches.length === 2) {
+                        spoken = `Found 2 products for "${cleanQuery}": ${matches[0].name} for $${matches[0].price.toFixed(2)}, and ${matches[1].name} for $${matches[1].price.toFixed(2)}. Displaying them on your screen!`;
+                    } else {
+                        const top2 = `${matches[0].name} for $${matches[0].price.toFixed(2)} and ${matches[1].name} for $${matches[1].price.toFixed(2)}`;
+                        spoken = `I found ${matches.length} products for "${cleanQuery}". Top picks include ${top2}. Showing all results on your screen!`;
+                    }
+                    action = "SEARCH_RESULTS";
+                } else if (cleanQuery.length > 1) {
+                    spoken = `I searched for "${cleanQuery}", but could not find any matching products. You can search for headphones, MacBook, Keychron keyboard, or monitors.`;
+                    action = "SEARCH_EMPTY";
+                } else {
+                    spoken = "I'm your IndusX Voice Assistant. Ask me to search headphones, show laptops, or say 'Add Sony headphones to cart'.";
+                    action = "GREETING";
+                }
+            }
+        }
+
+        // Apply UI Updates based on Action
+        if (action === 'SEARCH_RESULTS' || action === 'SEARCH') {
+            const queryToUse = cleanQuery || transcript;
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = queryToUse;
+            app.handleSearch(queryToUse);
+            const grid = document.getElementById('productGrid');
+            if (grid) {
+                setTimeout(() => {
+                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        } else if (action === 'SEARCH_EMPTY') {
+            const queryToUse = cleanQuery || transcript;
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.value = queryToUse;
+            app.handleSearch(queryToUse);
+        } else if (action === 'CART_UPDATED' || action === 'VIEW_CART') {
+            cartManager.openDrawer();
+        } else if (action === 'OPEN_CHECKOUT') {
+            checkoutManager.openModal();
+        }
+
+        // Display assistant spoken text
         const respBox = document.getElementById('voiceResponseBox');
         const respText = document.getElementById('assistantSpeechText');
         if (respBox && respText) {
@@ -3393,14 +3562,6 @@ const voiceAssistant = {
 
         if (statusEl) statusEl.textContent = 'Speaking response... 🔊';
         this.speak(spoken);
-
-        if (action === 'CART_UPDATED') {
-            cartManager.openDrawer();
-        } else if (action === 'OPEN_CHECKOUT') {
-            checkoutManager.openModal();
-        } else if (action === 'VIEW_CART') {
-            cartManager.openDrawer();
-        }
     },
 
     speak(text) {

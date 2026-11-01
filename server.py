@@ -4,7 +4,12 @@ import uuid
 import datetime
 from flask import Flask, request, jsonify, send_from_directory
 
-app = Flask(__name__, static_folder="src/main/resources/static", static_url_path="")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_DIR = os.path.join(BASE_DIR, "src", "main", "resources", "static")
+if not os.path.exists(STATIC_DIR):
+    STATIC_DIR = BASE_DIR
+
+app = Flask(__name__, static_folder=STATIC_DIR, static_url_path="")
 app.secret_key = os.getenv("SECRET_KEY", "indusxcart-secret-2026")
 
 # In-Memory Product Catalog
@@ -250,11 +255,19 @@ def recalculate_cart(cart):
 # Serve Frontend
 @app.route("/")
 def index():
-    return send_from_directory(app.static_folder, "index.html")
+    for f in [app.static_folder, BASE_DIR]:
+        if os.path.exists(os.path.join(f, "index.html")):
+            return send_from_directory(f, "index.html")
+    return "<h1>IndusXCart System Online</h1>"
 
 @app.route("/<path:path>")
 def static_proxy(path):
-    return send_from_directory(app.static_folder, path)
+    clean_path = path.split("?")[0]
+    for f in [app.static_folder, BASE_DIR]:
+        target = os.path.join(f, clean_path)
+        if os.path.exists(target) and not os.path.isdir(target):
+            return send_from_directory(f, clean_path)
+    return index()
 
 # Catalog Endpoints
 @app.route("/api/products", methods=["GET"])
@@ -440,91 +453,184 @@ def get_orders():
 def ai_chat():
     session_id = get_session_id()
     data = request.get_json() or {}
-    msg = (data.get("message") or data.get("query") or "").strip().lower()
+    msg = (data.get("message") or data.get("query") or data.get("transcript") or data.get("text") or "").strip().lower()
     cart = get_or_create_cart(session_id)
     recalculate_cart(cart)
 
     # 1. Add to cart intent
-    if msg.startswith("add") or "add to cart" in msg or "put in cart" in msg:
-        clean = re.sub(r"^(add|put)\s+", "", msg)
+    if msg.startswith("add") or "add to cart" in msg or "put in cart" in msg or "buy" in msg:
+        clean = re.sub(r"^(add|put|buy|kharido|daalo)\s+", "", msg)
         clean = re.sub(r"\s+(to|into|in)\s+(my\s+)?cart.*$", "", clean).strip()
+        clean = re.sub(r"\s+(cart\s+mein).*$", "", clean).strip()
+        
+        # Quantity extraction
+        qty = 1
+        qty_match = re.search(r"\b([1-9]|one|two|three|four|five)\b", clean)
+        if qty_match:
+            word_map = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5}
+            matched_qty = qty_match.group(1)
+            qty = word_map.get(matched_qty, int(matched_qty) if matched_qty.isdigit() else 1)
+            clean = re.sub(r"\b([1-9]|one|two|three|four|five)\b", "", clean).strip()
+
         matched = next((p for p in PRODUCTS if clean in p["name"].lower() or any(clean in t for t in p["tags"])), None)
+        if not matched and clean:
+            tokens = [t for t in clean.split() if len(t) > 2]
+            for p in PRODUCTS:
+                p_text = (p["name"] + " " + p["category"] + " " + " ".join(p["tags"])).lower()
+                if any(t in p_text for t in tokens):
+                    matched = p
+                    break
+
         if matched:
             cart["items"].append({
                 "productId": matched["id"],
                 "productName": matched["name"],
                 "price": matched["price"],
                 "imageUrl": matched["imageUrl"],
-                "quantity": 1,
-                "subtotal": matched["price"],
+                "quantity": qty,
+                "subtotal": matched["price"] * qty,
                 "stockQuantity": matched["stockQuantity"]
             })
             recalculate_cart(cart)
+            item_label = f"{qty}x {matched['name']}" if qty > 1 else matched['name']
             return jsonify({
-                "message": f"Added **{matched['name']}** to your cart ($ {matched['price']:.2f}). Your total is **${cart['total']:.2f}**.",
-                "spokenText": f"Added {matched['name']} to your cart. Total is ${cart['total']:.2f}.",
+                "message": f"Added **{item_label}** to your cart (${matched['price'] * qty:.2f}). Your new total is **${cart['total']:.2f}**.",
+                "spokenText": f"Added {item_label} to your cart. Total is now ${cart['total']:.2f}. Would you like to checkout?",
                 "action": "CART_UPDATED",
                 "data": cart,
                 "suggestions": ["View Cart", "Proceed to Checkout", "Recommend accessories"]
             })
+        else:
+            return jsonify({
+                "message": f"Could not find a product matching '{clean}'. Please check the name or browse categories.",
+                "spokenText": f"I couldn't identify the product '{clean}' to add. Try saying Add Sony Headphones.",
+                "action": "NONE",
+                "data": None,
+                "suggestions": ["Add Sony headphones", "Add Keychron keyboard", "View Catalog"]
+            })
 
     # 2. View Cart intent
-    if "cart" in msg:
+    if "cart" in msg and any(k in msg for k in ["what", "show", "view", "check", "kya", "dikhao", "in my", "summary"]) or msg == "cart":
         if not cart["items"]:
             return jsonify({
                 "message": "Your shopping cart is currently empty. Would you like some recommendations?",
-                "spokenText": "Your cart is empty.",
+                "spokenText": "Your shopping cart is currently empty. You can ask me to find headphones or MacBook!",
                 "action": "VIEW_CART",
                 "data": cart,
                 "suggestions": ["Show Headphones", "Browse Laptops", "Gaming Gear"]
             })
+        items_desc = ", ".join([f"{i['quantity']}x {i['productName']}" for i in cart["items"][:2]])
         return jsonify({
-            "message": f"You have **{cart['totalItemCount']} items** in your cart. Subtotal: **${cart['subtotal']:.2f}**, Total: **${cart['total']:.2f}**.",
-            "spokenText": f"You have {cart['totalItemCount']} items with total ${cart['total']:.2f}.",
+            "message": f"You have **{cart['totalItemCount']} items** in your cart. Items: {items_desc}. Subtotal: **${cart['subtotal']:.2f}**, Total: **${cart['total']:.2f}**.",
+            "spokenText": f"You have {cart['totalItemCount']} items in your cart including {items_desc}. Your total is ${cart['total']:.2f}.",
             "action": "VIEW_CART",
             "data": cart,
             "suggestions": ["Proceed to Checkout", "Apply coupon SAVE20", "Clear Cart"]
         })
 
     # 3. Checkout intent
-    if "checkout" in msg or "place order" in msg or "pay" in msg:
+    if "checkout" in msg or "place order" in msg or "pay" in msg or "order karo" in msg:
+        if not cart["items"]:
+            return jsonify({
+                "message": "Your cart is empty. Please add products before checking out.",
+                "spokenText": "Your cart is empty. Please add items before checking out.",
+                "action": "NONE",
+                "data": cart,
+                "suggestions": ["Browse Headphones", "Browse Laptops"]
+            })
         return jsonify({
             "message": f"You're ready to checkout **{cart['totalItemCount']} items** for **${cart['total']:.2f}**. Opening secure checkout...",
-            "spokenText": f"Opening checkout for ${cart['total']:.2f}.",
+            "spokenText": f"Opening secure checkout for your {cart['totalItemCount']} items totaling ${cart['total']:.2f}.",
             "action": "OPEN_CHECKOUT",
             "data": cart,
             "suggestions": ["Place Order", "Apply Coupon"]
         })
 
     # 4. Coupon intent
-    if "coupon" in msg or "code" in msg or "save20" in msg or "welcome10" in msg:
+    if "coupon" in msg or "code" in msg or "save20" in msg or "welcome10" in msg or "discount" in msg or "offer" in msg:
         for code in COUPONS:
             if code.lower() in msg:
                 cart["appliedCoupon"] = COUPONS[code]
                 recalculate_cart(cart)
                 return jsonify({
-                    "message": f"Coupon **{code}** applied! Your new total is **${cart['total']:.2f}**.",
-                    "spokenText": f"Coupon {code} applied. New total ${cart['total']:.2f}.",
+                    "message": f"Coupon **{code}** applied! You saved **${cart['discountAmount']:.2f}**. New total is **${cart['total']:.2f}**.",
+                    "spokenText": f"Coupon {code} applied! You saved ${cart['discountAmount']:.2f}. Your new total is ${cart['total']:.2f}.",
                     "action": "CART_UPDATED",
                     "data": cart,
                     "suggestions": ["Proceed to Checkout", "View Cart"]
                 })
         return jsonify({
             "message": "Available coupons: **WELCOME10** (10% off), **SAVE20** ($20 off over $100), and **FREESHIP** (Free delivery).",
-            "spokenText": "Available coupons: WELCOME10, SAVE20, and FREESHIP.",
+            "spokenText": "We have coupons WELCOME10 for 10% off and SAVE20 for $20 off on orders over $100.",
             "action": "NONE",
             "data": None,
             "suggestions": ["Apply WELCOME10", "Apply SAVE20", "Apply FREESHIP"]
         })
 
-    # Default Recommendation / Search
+    # 5. Clear Cart intent
+    if "clear cart" in msg or "empty cart" in msg or "cart khali" in msg:
+        cart["items"] = []
+        cart["appliedCoupon"] = None
+        recalculate_cart(cart)
+        return jsonify({
+            "message": "Your cart has been cleared.",
+            "spokenText": "I have emptied your shopping cart.",
+            "action": "CART_UPDATED",
+            "data": cart,
+            "suggestions": ["Show Headphones", "Browse Laptops"]
+        })
+
+    # 6. DYNAMIC VOICE & TEXT PRODUCT SEARCH INTENT
+    clean = re.sub(r"^(can you |please |could you |hey |hi |ok |assistant |tell me |help me )+", "", msg)
+    clean = re.sub(r"^(search for|search|find me|find|show me|show|look for|look up|browse|get me|i want to see|i want|do you have|where is|where are|display)\s+", "", clean)
+    clean = re.sub(r"\s+(dikhao|khojo|dhundo|batao|dekho|search karo|chahiye)$", "", clean)
+    clean = re.sub(r"^(dikhao|khojo|dhundo|batao)\s+", "", clean)
+    clean = re.sub(r"[?!.,;]", "", clean).strip()
+
+    tokens = [t for t in clean.split() if len(t) > 1]
+    matches = []
+    if tokens:
+        for p in PRODUCTS:
+            p_text = (p["name"] + " " + p["category"] + " " + p["description"] + " " + " ".join(p["tags"])).lower()
+            if any(tok in p_text for tok in tokens):
+                matches.append(p)
+
+    if matches:
+        if len(matches) == 1:
+            m = matches[0]
+            spoken = f"I found 1 product for '{clean}': {m['name']} for ${m['price']:.2f}. Rated {m['rating']} stars. Showing it on your screen now!"
+        elif len(matches) == 2:
+            spoken = f"Found 2 products for '{clean}': {matches[0]['name']} for ${matches[0]['price']:.2f}, and {matches[1]['name']} for ${matches[1]['price']:.2f}. Displaying them on your screen!"
+        else:
+            top2 = f"{matches[0]['name']} for ${matches[0]['price']:.2f} and {matches[1]['name']} for ${matches[1]['price']:.2f}"
+            spoken = f"I found {len(matches)} products for '{clean}'. Top picks include {top2}. Showing all results on your screen!"
+
+        return jsonify({
+            "message": f"Found **{len(matches)} product(s)** for '**{clean}**':",
+            "spokenText": spoken,
+            "action": "SEARCH_RESULTS",
+            "query": clean,
+            "data": matches,
+            "suggestions": [f"Add {matches[0]['name'][:25]}", "View Cart", "Clear Search"]
+        })
+    elif clean:
+        return jsonify({
+            "message": f"No products found matching '**{clean}**'. Try searching for **headphones**, **MacBook**, **Keychron keyboard**, or **Dell monitor**.",
+            "spokenText": f"I searched for '{clean}', but could not find any matching products. You can search for headphones, MacBook, keyboard, or monitors.",
+            "action": "SEARCH_EMPTY",
+            "query": clean,
+            "data": [],
+            "suggestions": ["Show Headphones", "Show MacBook", "Browse Keyboards"]
+        })
+
+    # Default fallback
     recs = PRODUCTS[:3]
     return jsonify({
-        "message": "Here are our top recommended products for you:",
-        "spokenText": "Here are our top recommendations for you.",
+        "message": "Welcome to **IndusXCart**! How can I help you today?",
+        "spokenText": "Welcome to IndusXCart! Ask me to search headphones, laptops, or add items to your cart.",
         "action": "SHOW_RECOMMENDATIONS",
         "data": recs,
-        "suggestions": ["Add Sony headphones", "Show MacBook", "What is in my cart?"]
+        "suggestions": ["Search Headphones", "Show MacBook", "What is in my cart?"]
     })
 
 # Voice Assistant Endpoint
@@ -532,21 +638,22 @@ def ai_chat():
 def ai_voice():
     session_id = get_session_id()
     data = request.get_json() or {}
-    transcript = (data.get("transcript") or data.get("text") or "").strip().lower()
+    transcript = (data.get("transcript") or data.get("text") or data.get("message") or "").strip().lower()
 
-    # Reuse AI Chat processing
+    # Pass the data directly
     chat_resp = ai_chat().get_json()
     return jsonify({
         "recognizedText": transcript,
-        "spokenResponse": chat_resp.get("spokenText") or "I processed your voice command.",
+        "spokenResponse": chat_resp.get("spokenText") or "I processed your voice request.",
         "displayText": chat_resp.get("message"),
         "action": chat_resp.get("action", "NONE"),
+        "query": chat_resp.get("query"),
         "data": chat_resp.get("data"),
         "speechRate": 1.05,
         "speechPitch": 1.0
     })
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     port = int(os.getenv("PORT", 8080))
     host = os.getenv("HOST", "0.0.0.0")
     print(f"==================================================")
