@@ -1,5 +1,5 @@
-/**
- * NovaCart Client Application Logic
+﻿/**
+ * IndusXCart Client Application Logic
  * Integrates Product Catalog, Cart Drawer, Checkout, AI Chatbot, and Voice Assistant.
  * Features Seamless Dual-Mode: Connects to Java 27 Backend, with Instant Local Fallback
  * if opened directly via file:// or if server is starting up.
@@ -1113,7 +1113,7 @@ const chatAssistant = {
         const bubble = document.createElement('div');
         bubble.id = id;
         bubble.className = 'chat-bubble bot-bubble';
-        bubble.innerHTML = '<div class="bubble-content" style="font-style: italic; color: var(--text-muted);">Nova is thinking... ✨</div>';
+        bubble.innerHTML = '<div class="bubble-content" style="font-style: italic; color: var(--text-muted);">IndusX is thinking... ✨</div>';
         container.appendChild(bubble);
         container.scrollTop = container.scrollHeight;
         return id;
@@ -1313,3 +1313,4 @@ window.addEventListener('DOMContentLoaded', () => {
     app.init();
     voiceAssistant.init();
 });
+

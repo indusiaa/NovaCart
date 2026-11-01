@@ -1,11 +1,11 @@
-import os
+﻿import os
 import re
 import uuid
 import datetime
 from flask import Flask, request, jsonify, send_from_directory
 
 app = Flask(__name__, static_folder="src/main/resources/static", static_url_path="")
-app.secret_key = os.getenv("SECRET_KEY", "novacart-secret-2026")
+app.secret_key = os.getenv("SECRET_KEY", "indusxcart-secret-2026")
 
 # In-Memory Product Catalog
 PRODUCTS = [
@@ -550,7 +550,8 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", 8080))
     host = os.getenv("HOST", "0.0.0.0")
     print(f"==================================================")
-    print(f"🚀 NovaCart E-Commerce System Online")
+    print(f"🚀 IndusXCart E-Commerce System Online")
     print(f"🌐 Running at: http://{host}:{port}")
     print(f"==================================================")
     app.run(host=host, port=port, debug=False)
+

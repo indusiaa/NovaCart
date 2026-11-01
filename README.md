@@ -1,4 +1,4 @@
-# NovaCart: AI & Voice Powered E-Commerce Shopping Cart System
+﻿# IndusXCart: AI & Voice Powered E-Commerce Shopping Cart System
 
 An enterprise-ready, zero-dependency Java 27 E-Commerce Shopping Cart System featuring product catalog selection, shopping cart lifecycle management, transactional multi-step checkout, and integrated **AI Chatbot** and **Voice Assistant** capabilities.
 
@@ -142,3 +142,4 @@ Once started, open your browser at:
 - *"Recommend something for gaming"*
 - *"What is your return policy?"*
 - *"Proceed to checkout"*
+
