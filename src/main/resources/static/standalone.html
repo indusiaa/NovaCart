@@ -1,0 +1,3425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaCart - AI & Voice Powered E-Commerce</title>
+    <style>
+/* ==========================================================================
+   NovaCart Premium Modern CSS System (V2 Enhanced)
+   ========================================================================== */
+
+:root {
+    --bg-primary: #070a13;
+    --bg-secondary: #0d121f;
+    --bg-tertiary: #151d30;
+    --bg-card: rgba(13, 18, 31, 0.85);
+    --bg-card-hover: rgba(21, 29, 48, 0.95);
+    --bg-glass: rgba(255, 255, 255, 0.03);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --brand-primary: #6366f1;
+    --brand-hover: #4f46e5;
+    --brand-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    --brand-glow: rgba(99, 102, 241, 0.4);
+
+    --accent-cyan: #06b6d4;
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.14);
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(99, 102, 241, 0.35);
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 30px var(--brand-glow);
+
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Announcement Bar */
+.announcement-bar {
+    background: linear-gradient(90deg, #1e1b4b, #2e1065, #1e1b4b);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e7ff;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.announcement-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.badge-fire {
+    font-size: 0.72rem;
+    font-weight: 800;
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+.coupon-chip {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(251, 191, 36, 0.15);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: #fde047;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.coupon-chip:hover {
+    background: rgba(251, 191, 36, 0.3);
+}
+
+/* Navigation Header */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 10, 19, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.logo-icon-glow {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.7));
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.gradient-text {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-full);
+    color: #a5b4fc;
+}
+
+.live-pill {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: #34d399;
+}
+
+/* Search Bar */
+.search-container {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 11px 36px 11px 40px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Nav Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    user-select: none;
+}
+
+.btn-primary {
+    background: var(--brand-gradient);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.6);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-voice-glow {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(99, 102, 241, 0.15));
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #f3e8ff;
+    padding: 9px 16px;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.btn-voice-glow:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(99, 102, 241, 0.3));
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+}
+
+.btn-chat-glow {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.15));
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    color: #e0e7ff;
+    padding: 9px 16px;
+}
+
+.btn-chat-glow:hover {
+    background: rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.btn-cart-glow {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 9px 16px;
+    gap: 8px;
+}
+
+.btn-cart-glow:hover {
+    border-color: var(--brand-primary);
+}
+
+.cart-count {
+    background: var(--brand-primary);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+}
+
+.cart-subtotal {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #a5b4fc;
+}
+
+/* Main Layout */
+.main-layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 30px 24px 70px;
+}
+
+/* Hero Banner */
+.hero-banner {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 36px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(13, 18, 31, 0.9) 0%, rgba(21, 29, 48, 0.7) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 44px;
+    margin-bottom: 38px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 460px;
+    height: 460px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+    pointer-events: none;
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 14px;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-full);
+    color: #a5b4fc;
+    margin-bottom: 16px;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    box-shadow: 0 0 10px #34d399;
+}
+
+.hero-heading {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.18;
+    margin-bottom: 16px;
+    letter-spacing: -0.8px;
+}
+
+.hero-subtext {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 26px;
+    line-height: 1.6;
+}
+
+.hero-cta-group {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.btn-lg {
+    padding: 13px 26px;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+}
+
+.hero-voice-card {
+    background: rgba(13, 18, 31, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+}
+
+.voice-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mic-icon-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+.voice-card-header h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #f1f5f9;
+}
+
+.voice-card-header p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.command-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.cmd-pill {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    font-size: 0.84rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cmd-pill:hover {
+    background: rgba(99, 102, 241, 0.22);
+    border-color: var(--brand-primary);
+    transform: translateX(4px);
+    color: #ffffff;
+}
+
+/* Category Filter Tabs & Controls */
+.catalog-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cat-pill {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cat-pill:hover {
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cat-pill.active {
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.filter-controls select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 9px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.sort-selector label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-right: 6px;
+}
+
+/* Products Section */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 22px;
+}
+
+.section-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.section-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.product-count {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 26px;
+}
+
+.product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    background: var(--bg-card-hover);
+    border-color: rgba(99, 102, 241, 0.45);
+    box-shadow: var(--shadow-md), 0 0 25px rgba(99, 102, 241, 0.15);
+}
+
+.product-img-box {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    background: #090d18;
+    overflow: hidden;
+}
+
+.product-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+}
+
+.product-card:hover .product-img-box img {
+    transform: scale(1.08);
+}
+
+.product-category-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(10, 14, 23, 0.85);
+    backdrop-filter: blur(8px);
+    color: #e2e8f0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-stock-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.stock-in {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.stock-low {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.product-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.35;
+    color: var(--text-primary);
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    color: #fbbf24;
+    margin-bottom: 10px;
+}
+
+.product-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+}
+
+.product-price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+
+.btn-add-cart {
+    background: var(--brand-primary);
+    color: #ffffff;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+}
+
+.btn-add-cart:hover {
+    background: var(--brand-hover);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+}
+
+/* Cart Drawer */
+.cart-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.cart-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 450px;
+    max-width: 100vw;
+    background: #0c111e;
+    border-left: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    z-index: 210;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-drawer.open {
+    transform: translateX(0);
+}
+
+.cart-drawer-header {
+    padding: 22px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-drawer-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-drawer-title h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.cart-badge-count {
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    font-size: 0.75rem;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+/* Free Shipping Progress */
+.shipping-progress-box {
+    background: rgba(99, 102, 241, 0.08);
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.shipping-status-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c7d2fe;
+    margin-bottom: 8px;
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #10b981);
+    transition: width 0.4s ease;
+}
+
+/* Cart Items Container */
+.cart-items-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cart-item-card {
+    display: flex;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+}
+
+.cart-item-img {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    background: #000;
+}
+
+.cart-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cart-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.cart-item-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.btn-remove-item {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px;
+}
+
+.btn-remove-item:hover {
+    color: var(--danger);
+}
+
+.cart-item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    padding: 3px 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.qty-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.qty-display {
+    padding: 2px 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.cart-item-price {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #ffffff;
+}
+
+.empty-cart-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty-cart-icon {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+}
+
+/* Cart Footer */
+.cart-drawer-footer {
+    padding: 20px 24px;
+    border-top: 1px solid var(--border-color);
+    background: rgba(12, 17, 30, 0.95);
+}
+
+.coupon-section {
+    margin-bottom: 16px;
+}
+
+.coupon-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.coupon-input-group input {
+    flex: 1;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 9px 12px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+}
+
+.applied-coupon-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--success-bg);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    color: #34d399;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.price-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 0.9rem;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+}
+
+.discount-row {
+    color: #34d399;
+    font-weight: 600;
+}
+
+.total-row {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-ghost {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+    color: var(--danger);
+}
+
+/* Modals */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: #0f1627;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 22px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.checkout-body {
+    padding: 24px;
+}
+
+.form-section {
+    margin-bottom: 24px;
+}
+
+.form-section h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #c7d2fe;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px var(--brand-glow);
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.payment-card-opt {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.payment-card-opt input {
+    margin-right: 10px;
+}
+
+.payment-card-opt:hover {
+    border-color: var(--brand-primary);
+}
+
+.opt-icon {
+    font-size: 1.15rem;
+    margin-right: 6px;
+}
+
+.opt-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.checkout-summary-bar {
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 1.15rem;
+    text-align: right;
+    color: #ffffff;
+}
+
+.modal-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Order Confirmation View */
+.order-receipt-view {
+    padding: 44px 28px;
+    text-align: center;
+}
+
+.success-badge-icon {
+    font-size: 3.8rem;
+    margin-bottom: 12px;
+}
+
+.receipt-sub {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.receipt-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    margin-bottom: 24px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+}
+
+.receipt-id {
+    color: #a5b4fc;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.receipt-total {
+    color: #34d399;
+    font-size: 1.15rem;
+}
+
+/* AI Chatbot Widget */
+.chat-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 390px;
+    max-width: calc(100vw - 48px);
+    height: 550px;
+    background: #0d1220;
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    z-index: 250;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.9) translateY(40px);
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.chat-widget.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.chat-header {
+    padding: 16px 20px;
+    background: linear-gradient(90deg, #1e1b4b, #0f172a);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-bot-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--brand-primary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+}
+
+.chat-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.chat-subtitle {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.online-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--success);
+    border-radius: 50%;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chat-bubble {
+    display: flex;
+    max-width: 85%;
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.bot-bubble {
+    align-self: flex-start;
+}
+
+.bot-bubble .bubble-content {
+    background: rgba(21, 29, 48, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 14px 14px 14px 2px;
+    padding: 12px 14px;
+    color: var(--text-primary);
+}
+
+.bot-bubble ul {
+    margin-left: 18px;
+    margin-top: 6px;
+}
+
+.user-bubble {
+    align-self: flex-end;
+}
+
+.user-bubble .bubble-content {
+    background: var(--brand-primary);
+    color: #ffffff;
+    border-radius: 14px 14px 2px 14px;
+    padding: 10px 14px;
+}
+
+.chat-mini-card {
+    background: rgba(13, 18, 31, 0.95);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.chat-suggestions {
+    padding: 9px 12px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    border-top: 1px solid var(--border-color);
+    background: rgba(10, 14, 23, 0.6);
+}
+
+.suggestion-chip {
+    white-space: nowrap;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid var(--border-highlight);
+    color: #c7d2fe;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.suggestion-chip:hover {
+    background: var(--brand-primary);
+    color: #ffffff;
+}
+
+.chat-input-bar {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+}
+
+.chat-input-bar input {
+    flex: 1;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
+    color: #ffffff;
+    font-size: 0.88rem;
+    outline: none;
+}
+
+.chat-input-bar input:focus {
+    border-color: var(--brand-primary);
+}
+
+.chat-mic-btn {
+    background: rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    border-radius: var(--radius-md);
+    color: #e9d5ff;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.chat-send-btn {
+    padding: 9px 16px;
+    font-size: 0.88rem;
+}
+
+/* Voice Assistant Modal & Visualizer */
+.voice-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 10, 19, 0.92);
+    backdrop-filter: blur(20px);
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.voice-modal-box {
+    background: linear-gradient(180deg, #18192e 0%, #0e111d 100%);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 70px rgba(168, 85, 247, 0.3);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 520px;
+    padding: 44px 34px;
+    text-align: center;
+    position: relative;
+}
+
+.voice-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+}
+
+.voice-waveform-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.voice-orb {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 35px rgba(168, 85, 247, 0.7);
+    margin-bottom: 20px;
+}
+
+.pulse-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(168, 85, 247, 0.5);
+    animation: pulseRing 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.pulse-ring:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+@keyframes pulseRing {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 0.2; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+.voice-mic-icon {
+    font-size: 2.3rem;
+}
+
+.waveform-bars {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 40px;
+}
+
+.bar {
+    width: 4px;
+    height: 10px;
+    background: #c084fc;
+    border-radius: 2px;
+    animation: waveBounce 1s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+.bar:nth-child(3) { animation-delay: 0.2s; height: 26px; }
+.bar:nth-child(4) { animation-delay: 0.3s; height: 34px; }
+.bar:nth-child(5) { animation-delay: 0.4s; height: 40px; }
+.bar:nth-child(6) { animation-delay: 0.3s; height: 32px; }
+.bar:nth-child(7) { animation-delay: 0.2s; height: 22px; }
+.bar:nth-child(8) { animation-delay: 0.1s; height: 14px; }
+
+@keyframes waveBounce {
+    0% { transform: scaleY(0.3); opacity: 0.4; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+.voice-status-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #e9d5ff;
+    margin-bottom: 16px;
+}
+
+.voice-transcript-box {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 14px;
+    min-height: 60px;
+    text-align: left;
+}
+
+.transcript-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.transcript-text {
+    font-size: 0.95rem;
+    color: #ffffff;
+    font-style: italic;
+}
+
+.voice-response-box {
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid var(--border-highlight);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.assistant-speech-text {
+    font-size: 0.95rem;
+    color: #c7d2fe;
+}
+
+.voice-sample-actions {
+    margin-top: 14px;
+}
+
+.sample-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.sample-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.chip-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e0e7ff;
+    padding: 7px 14px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.chip-btn:hover {
+    background: rgba(168, 85, 247, 0.3);
+    border-color: #a855f7;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 500;
+}
+
+.toast {
+    background: #151d30;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    color: #ffffff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-success {
+    border-left: 4px solid var(--success);
+}
+
+.toast-error {
+    border-left: 4px solid var(--danger);
+}
+
+@keyframes toastIn {
+    from { transform: translateX(-40px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .hero-banner {
+        grid-template-columns: 1fr;
+        padding: 28px;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .payment-methods-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Promotional Banner -->
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <span class="badge-fire">🔥 SPECIAL OFFERS</span>
+            <span>Use coupon <code class="coupon-chip" onclick="cartManager.quickApply('WELCOME10')">WELCOME10</code> for 10% off or <code class="coupon-chip" onclick="cartManager.quickApply('SAVE20')">SAVE20</code> on orders over $100! Free shipping on orders $50+.</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo-area" onclick="app.resetFilters()">
+                <div class="logo-icon-glow">✨</div>
+                <div class="logo-text">
+                    <span class="brand-title">Nova<span class="gradient-text">Cart</span></span>
+                    <span class="brand-badge">AI 2.0</span>
+                    <span class="live-pill" id="backendStatusBadge">⚡ Instant Mode</span>
+                </div>
+            </div>
+
+            <!-- Instant Search Bar -->
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search headphones, MacBook, keyboard, mice... (or ask AI)" oninput="app.handleSearch(this.value)">
+                <button class="clear-search-btn" id="clearSearchBtn" onclick="app.clearSearch()" style="display:none;">✕</button>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="nav-actions">
+                <!-- Voice Assistant Trigger -->
+                <button class="btn btn-voice-glow" onclick="voiceAssistant.toggle()" title="Talk to Voice Assistant">
+                    <span class="mic-wave">🎙️</span>
+                    <span class="btn-label">Voice Assistant</span>
+                </button>
+
+                <!-- AI Chatbot Trigger -->
+                <button class="btn btn-chat-glow" onclick="chatAssistant.toggle()" title="Open AI Chat Assistant">
+                    <span>💬</span>
+                    <span class="btn-label">AI Chat</span>
+                </button>
+
+                <!-- Shopping Cart Trigger -->
+                <button class="btn btn-cart-glow" onclick="cartManager.openDrawer()" title="View Cart">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCountBadge">0</span>
+                    <span class="cart-subtotal" id="cartHeaderSubtotal">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-layout">
+        <!-- Hero Section with Futuristic Conversational Shopping -->
+        <section class="hero-banner">
+            <div class="hero-left">
+                <div class="hero-pill">
+                    <span class="pulse-dot"></span> Conversational Shopping Assistant
+                </div>
+                <h1 class="hero-heading">
+                    The Smartest Way to Shop with <span class="gradient-text">AI & Voice</span>
+                </h1>
+                <p class="hero-subtext">
+                    Browse our premium electronics, use natural language chat, or just speak aloud.
+                    Say <em>"Add Sony headphones to my cart"</em> or <em>"Recommend top gaming gear"</em>.
+                </p>
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary btn-lg" onclick="voiceAssistant.startListening()">
+                        <span>🎙️</span> Try Voice Shopping
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="chatAssistant.openWithPrompt('What deals and recommendations do you have?')">
+                        <span>💬</span> Chat with AI
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-voice-card">
+                    <div class="voice-card-header">
+                        <span class="mic-icon-circle">🎙️</span>
+                        <div>
+                            <h4>Try Voice Commands</h4>
+                            <p>Click any voice prompt below:</p>
+                        </div>
+                    </div>
+                    <div class="command-pills">
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Show noise cancelling headphones')">
+                            <span>🔍</span> "Show noise cancelling headphones"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to my cart')">
+                            <span>🛒</span> "Add Sony headphones to my cart"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">
+                            <span>📦</span> "What is in my cart?"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Apply coupon SAVE20')">
+                            <span>🏷️</span> "Apply coupon SAVE20"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">
+                            <span>💳</span> "Proceed to checkout"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filter Tabs & Controls -->
+        <section class="catalog-controls">
+            <div class="category-tabs" id="categoryTabs">
+                <button class="cat-pill active" data-category="ALL" onclick="app.setCategory('ALL')">✨ All Products</button>
+                <button class="cat-pill" data-category="AUDIO" onclick="app.setCategory('AUDIO')">🎧 Audio</button>
+                <button class="cat-pill" data-category="ELECTRONICS" onclick="app.setCategory('ELECTRONICS')">💻 Electronics</button>
+                <button class="cat-pill" data-category="WEARABLES" onclick="app.setCategory('WEARABLES')">⌚ Wearables</button>
+                <button class="cat-pill" data-category="HOME_OFFICE" onclick="app.setCategory('HOME_OFFICE')">💼 Home Office</button>
+                <button class="cat-pill" data-category="GAMING" onclick="app.setCategory('GAMING')">🎮 Gaming</button>
+                <button class="cat-pill" data-category="ACCESSORIES" onclick="app.setCategory('ACCESSORIES')">⚡ Accessories</button>
+            </div>
+
+            <div class="filter-controls">
+                <div class="sort-selector">
+                    <label for="sortSelect">Sort By:</label>
+                    <select id="sortSelect" onchange="app.handleSort(this.value)">
+                        <option value="featured">Top Rated / Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name">Name (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section class="products-section">
+            <div class="section-header">
+                <div>
+                    <h2 id="sectionTitle">Featured Gear</h2>
+                    <p class="section-subtitle">Top-tier tech with verified customer reviews and immediate dispatch</p>
+                </div>
+                <span class="product-count" id="productCountLabel">Loading catalog...</span>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Dynamically populated product cards -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Cart Drawer -->
+    <div class="cart-backdrop" id="cartBackdrop" onclick="cartManager.closeDrawer()"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-drawer-header">
+            <div class="cart-drawer-title">
+                <h3>Your Shopping Cart</h3>
+                <span class="cart-badge-count" id="drawerCartCount">0 items</span>
+            </div>
+            <button class="close-btn" onclick="cartManager.closeDrawer()" title="Close Cart">✕</button>
+        </div>
+
+        <!-- Free Shipping Progress Bar -->
+        <div class="shipping-progress-box" id="shippingProgressBar">
+            <div class="shipping-status-text" id="shippingStatusText">Add $50.00 more for FREE shipping!</div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="shippingFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Cart Items List -->
+        <div class="cart-items-container" id="cartItemsContainer">
+            <!-- Dynamically populated cart items -->
+        </div>
+
+        <!-- Cart Footer with Totals & Coupon -->
+        <div class="cart-drawer-footer" id="cartDrawerFooter">
+            <!-- Coupon Code Section -->
+            <div class="coupon-section">
+                <div class="coupon-input-group" id="couponInputGroup">
+                    <input type="text" id="couponInput" placeholder="Coupon Code (e.g. SAVE20)" uppercase>
+                    <button class="btn btn-secondary btn-sm" onclick="cartManager.applyCoupon()">Apply</button>
+                </div>
+                <div class="applied-coupon-tag" id="appliedCouponTag" style="display: none;">
+                    <span class="tag-label" id="appliedCouponName">COUPON</span>
+                    <button class="remove-coupon-btn" onclick="cartManager.removeCoupon()" title="Remove coupon">✕</button>
+                </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span>Subtotal</span>
+                    <span id="summarySubtotal">$0.00</span>
+                </div>
+                <div class="price-row discount-row" id="discountRow" style="display: none;">
+                    <span>Discount Savings</span>
+                    <span id="summaryDiscount">-$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Estimated Tax (8%)</span>
+                    <span id="summaryTax">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Shipping</span>
+                    <span id="summaryShipping">$0.00</span>
+                </div>
+                <div class="price-row total-row">
+                    <span>Final Total</span>
+                    <span class="total-amount" id="summaryTotal">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="cart-action-buttons">
+                <button class="btn btn-primary btn-block btn-lg" onclick="checkoutManager.openModal()">
+                    Proceed to Checkout 🔒
+                </button>
+                <button class="btn btn-ghost btn-sm btn-block" onclick="cartManager.clearCart()">
+                    Empty Cart
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Multi-step Checkout Modal -->
+    <div class="modal-backdrop" id="checkoutBackdrop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🔒 Express Checkout</h3>
+                <button class="close-btn" onclick="checkoutManager.closeModal()">✕</button>
+            </div>
+
+            <div class="checkout-body" id="checkoutBody">
+                <form id="checkoutForm" onsubmit="checkoutManager.submitOrder(event)">
+                    <!-- Customer Information -->
+                    <div class="form-section">
+                        <h4>1. Customer Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="custName">Full Name *</label>
+                                <input type="text" id="custName" required placeholder="Alex Mercer" value="Alex Mercer">
+                            </div>
+                            <div class="form-group">
+                                <label for="custEmail">Email Address *</label>
+                                <input type="email" id="custEmail" required placeholder="alex@example.com" value="alex@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="custPhone">Phone Number</label>
+                            <input type="tel" id="custPhone" placeholder="+1 (555) 019-2834" value="+1 (555) 019-2834">
+                        </div>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h4>2. Shipping Address</h4>
+                        <div class="form-group">
+                            <label for="shippingAddress">Street Address & Apartment *</label>
+                            <input type="text" id="shippingAddress" required placeholder="742 Evergreen Terrace, Springfield, OR 97477" value="742 Evergreen Terrace, Springfield, OR 97477">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-section">
+                        <h4>3. Payment Method</h4>
+                        <div class="payment-methods-grid">
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="CREDIT_CARD" checked onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">💳</span>
+                                    <span class="opt-title">Credit / Debit Card</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="UPI" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">⚡</span>
+                                    <span class="opt-title">Instant UPI</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="PAYPAL" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">🅿️</span>
+                                    <span class="opt-title">PayPal</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="CASH_ON_DELIVERY" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">💵</span>
+                                    <span class="opt-title">Cash on Delivery</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Card Fields -->
+                        <div class="payment-extra-fields" id="paymentCardFields">
+                            <div class="form-group">
+                                <label for="cardNum">Card Number</label>
+                                <input type="text" id="cardNum" placeholder="4532 •••• •••• 8890" value="4532 8900 1234 5678" maxlength="19">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cardExp">Expiry (MM/YY)</label>
+                                    <input type="text" id="cardExp" placeholder="12/28" value="12/28" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardCvv">CVV</label>
+                                    <input type="password" id="cardCvv" placeholder="•••" value="889" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Fields -->
+                        <div class="payment-extra-fields" id="paymentUpiFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="upiId">UPI Virtual Payment Address (VPA)</label>
+                                <input type="text" id="upiId" placeholder="alex@okhdfcbank" value="alex@okhdfcbank">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Total Summary -->
+                    <div class="checkout-summary-bar">
+                        <span>Total Payable: <strong id="checkoutModalTotal">$0.00</strong></span>
+                    </div>
+
+                    <div class="modal-footer-actions">
+                        <button type="button" class="btn btn-secondary" onclick="checkoutManager.closeModal()">Back to Cart</button>
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitOrderBtn">Place Order Now 🚀</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Confirmation Success View -->
+            <div class="order-receipt-view" id="orderReceiptView" style="display: none;">
+                <div class="success-badge-icon">🎉</div>
+                <h3>Order Placed Successfully!</h3>
+                <p class="receipt-sub">Thank you for your purchase. Your order receipt and shipment tracking details:</p>
+                
+                <div class="receipt-card">
+                    <div class="receipt-row">
+                        <span>Order ID:</span>
+                        <strong class="receipt-id" id="receiptOrderId">ORD-000000</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Tracking Number:</span>
+                        <code id="receiptTracking">TRK-000000</code>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Transaction ID:</span>
+                        <code id="receiptTransaction">TXN-000000</code>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Total Paid:</span>
+                        <strong class="receipt-total" id="receiptTotal">$0.00</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Delivery Address:</span>
+                        <span id="receiptAddress">Address</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer-actions">
+                    <button class="btn btn-primary btn-block" onclick="checkoutManager.finishAndShop()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot Drawer Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-bot-info">
+                <div class="chat-avatar">🤖</div>
+                <div>
+                    <div class="chat-title">Nova AI Assistant</div>
+                    <div class="chat-subtitle"><span class="online-dot"></span> Online • Natural Language Agent</div>
+                </div>
+            </div>
+            <button class="close-btn" onclick="chatAssistant.toggle()" title="Close Chat">✕</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble bot-bubble">
+                <div class="bubble-content">
+                    👋 Hi! I'm your AI Shopping Assistant. How can I help you today?
+                    <br><br>
+                    You can ask me to:
+                    <ul>
+                        <li>Search gear (e.g. <em>"Show headphones under $300"</em>)</li>
+                        <li>Add products to your cart (e.g. <em>"Add 2 Sony headphones"</em>)</li>
+                        <li>Apply discounts (e.g. <em>"Apply coupon SAVE20"</em>)</li>
+                        <li>Check your cart or proceed to checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Suggestion Chips -->
+        <div class="chat-suggestions" id="chatSuggestions">
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Recommend popular headphones')">🎧 Popular Headphones</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Show MacBook and monitors')">💻 Laptops & Monitors</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('What is in my cart?')">🛒 Check My Cart</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Apply coupon WELCOME10')">🏷️ Apply WELCOME10</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('What is your return policy?')">📦 Return Policy</button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form class="chat-input-bar" onsubmit="chatAssistant.sendMessage(event)">
+            <input type="text" id="chatInputField" placeholder="Type a request (e.g. 'Add Sony headphones')..." autocomplete="off">
+            <button type="button" class="chat-mic-btn" onclick="voiceAssistant.startListening()" title="Speak instead">🎙️</button>
+            <button type="submit" class="btn btn-primary chat-send-btn">Send</button>
+        </form>
+    </div>
+
+    <!-- Voice Assistant Modal Overlay & Waveform Visualizer -->
+    <div class="voice-modal-overlay" id="voiceModal" style="display: none;">
+        <div class="voice-modal-box">
+            <button class="close-btn voice-close" onclick="voiceAssistant.stopListening()">✕</button>
+            
+            <div class="voice-waveform-area">
+                <div class="voice-orb" id="voiceOrb">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
+                    <span class="voice-mic-icon">🎙️</span>
+                </div>
+                <div class="waveform-bars" id="waveformBars">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+            </div>
+
+            <div class="voice-status-text" id="voiceStatus">Listening... Speak now</div>
+            
+            <div class="voice-transcript-box">
+                <div class="transcript-label">Recognized Speech:</div>
+                <div class="transcript-text" id="voiceTranscript">"Say something like 'Add Sony headphones to cart'..."</div>
+            </div>
+
+            <div class="voice-response-box" id="voiceResponseBox" style="display: none;">
+                <div class="transcript-label">Assistant Spoke:</div>
+                <div class="assistant-speech-text" id="assistantSpeechText"></div>
+            </div>
+
+            <div class="voice-sample-actions">
+                <span class="sample-label">Or click to test voice command:</span>
+                <div class="sample-chips">
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to cart')">Add Sony Headphones</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Show mechanical keyboards')">Show Keyboards</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">What's in my cart?</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">Checkout Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+/**
+ * NovaCart Client Application Logic
+ * Integrates Product Catalog, Cart Drawer, Checkout, AI Chatbot, and Voice Assistant.
+ * Features Seamless Dual-Mode: Connects to Java 27 Backend, with Instant Local Fallback
+ * if opened directly via file:// or if server is starting up.
+ */
+
+// Generate or retrieve persistent customer session ID
+const SESSION_ID = (() => {
+    let sid = localStorage.getItem('novacart_session_id');
+    if (!sid) {
+        sid = 'session-' + Math.random().toString(36).substring(2, 10);
+        localStorage.setItem('novacart_session_id', sid);
+    }
+    return sid;
+})();
+
+// Detect API base URL
+const API_BASE = (window.location.protocol.startsWith('http')) 
+    ? window.location.origin 
+    : 'http://localhost:8080';
+
+let isBackendAvailable = false;
+
+// Common Headers for JSON REST requests
+function getHeaders() {
+    return {
+        'Content-Type': 'application/json',
+        'X-Session-ID': SESSION_ID
+    };
+}
+
+// ============================================================================
+// TOAST NOTIFICATIONS
+// ============================================================================
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    const icon = type === 'success' ? '✅' : '⚠️';
+    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
+}
+
+// ============================================================================
+// SEED CATALOG DATA (Guarantees Instant Display in Any Mode)
+// ============================================================================
+const SEED_PRODUCTS = [
+    {
+        id: "PROD-AUDIO-01",
+        name: "Sony WH-1000XM5 Wireless Headphones",
+        description: "Industry-leading noise cancellation with dual processors, 30-hour battery life, and ultra-comfortable lightweight design.",
+        price: 349.99,
+        category: "AUDIO",
+        categoryDisplay: "Audio & Headphones",
+        stockQuantity: 24,
+        rating: 4.8,
+        imageUrl: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
+        tags: ["audio", "headphones", "bluetooth", "noise-cancelling", "sony"]
+    },
+    {
+        id: "PROD-AUDIO-02",
+        name: "Bose QuietComfort 45 Headphones",
+        description: "Iconic quiet, comfort, and sound. Deep, clear audio with active acoustic noise cancellation.",
+        price: 279.00,
+        category: "AUDIO",
+        categoryDisplay: "Audio & Headphones",
+        stockQuantity: 18,
+        rating: 4.7,
+        imageUrl: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&q=80",
+        tags: ["audio", "headphones", "bose", "wireless", "travel"]
+    },
+    {
+        id: "PROD-AUDIO-03",
+        name: "Apple AirPods Pro (2nd Gen)",
+        description: "Next-level active noise cancellation, adaptive transparency, and personalized spatial audio.",
+        price: 239.00,
+        category: "AUDIO",
+        categoryDisplay: "Audio & Headphones",
+        stockQuantity: 45,
+        rating: 4.9,
+        imageUrl: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&q=80",
+        tags: ["audio", "earbuds", "apple", "wireless", "airpods"]
+    },
+    {
+        id: "PROD-ELEC-01",
+        name: "Apple MacBook Air 15-inch M3",
+        description: "Strikingly thin design with the lightning-fast Apple M3 chip, up to 18 hours of battery, and stunning Liquid Retina display.",
+        price: 1249.00,
+        category: "ELECTRONICS",
+        categoryDisplay: "Electronics",
+        stockQuantity: 12,
+        rating: 4.9,
+        imageUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80",
+        tags: ["laptop", "macbook", "apple", "computer", "ultrabook", "m3"]
+    },
+    {
+        id: "PROD-ELEC-02",
+        name: "Dell UltraSharp 27\" 4K USB-C Hub Monitor",
+        description: "Brilliant IPS Black technology with 4K resolution, 98% DCI-P3 color gamut, and 90W USB-C power delivery.",
+        price: 499.50,
+        category: "ELECTRONICS",
+        categoryDisplay: "Electronics",
+        stockQuantity: 15,
+        rating: 4.6,
+        imageUrl: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80",
+        tags: ["monitor", "display", "4k", "dell", "screen", "office"]
+    },
+    {
+        id: "PROD-ELEC-03",
+        name: "Kindle Paperwhite 16GB",
+        description: "6.8-inch glare-free display, adjustable warm light, waterproof design, and weeks of battery life.",
+        price: 139.99,
+        category: "ELECTRONICS",
+        categoryDisplay: "Electronics",
+        stockQuantity: 30,
+        rating: 4.7,
+        imageUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&q=80",
+        tags: ["reader", "kindle", "books", "amazon", "e-reader"]
+    },
+    {
+        id: "PROD-WEAR-01",
+        name: "Samsung Galaxy Watch 6 Classic",
+        description: "Rotating bezel, sapphire crystal glass, advanced sleep coaching, and comprehensive fitness tracking.",
+        price: 329.00,
+        category: "WEARABLES",
+        categoryDisplay: "Wearables & Smartwatches",
+        stockQuantity: 20,
+        rating: 4.6,
+        imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80",
+        tags: ["watch", "smartwatch", "samsung", "fitness", "wearable"]
+    },
+    {
+        id: "PROD-WEAR-02",
+        name: "Apple Watch Series 9 GPS 45mm",
+        description: "Powerful S9 SiP chip, magical double tap gesture, brighter Always-On display, and advanced health sensors.",
+        price: 399.00,
+        category: "WEARABLES",
+        categoryDisplay: "Wearables & Smartwatches",
+        stockQuantity: 25,
+        rating: 4.8,
+        imageUrl: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&q=80",
+        tags: ["watch", "smartwatch", "apple", "fitness", "wearable"]
+    },
+    {
+        id: "PROD-OFF-01",
+        name: "Logitech MX Master 3S Wireless Mouse",
+        description: "Quiet clicks, 8K DPI any-surface sensor, MagSpeed electromagnetic scrolling, and ergonomic thumb rest.",
+        price: 99.99,
+        category: "HOME_OFFICE",
+        categoryDisplay: "Home Office",
+        stockQuantity: 50,
+        rating: 4.9,
+        imageUrl: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500&q=80",
+        tags: ["mouse", "logitech", "bluetooth", "office", "ergonomic", "mx"]
+    },
+    {
+        id: "PROD-OFF-02",
+        name: "Keychron K2 Pro Mechanical Keyboard",
+        description: "QMK/VIA wireless custom mechanical keyboard with hot-swappable switches and RGB backlighting.",
+        price: 119.00,
+        category: "HOME_OFFICE",
+        categoryDisplay: "Home Office",
+        stockQuantity: 22,
+        rating: 4.7,
+        imageUrl: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500&q=80",
+        tags: ["keyboard", "mechanical", "keychron", "wireless", "gaming", "office"]
+    },
+    {
+        id: "PROD-OFF-03",
+        name: "Rode NT-USB Mini Studio Microphone",
+        description: "Compact studio-quality USB microphone with directional cardioid pickup, built-in pop filter, and zero-latency monitoring.",
+        price: 99.00,
+        category: "HOME_OFFICE",
+        categoryDisplay: "Home Office",
+        stockQuantity: 16,
+        rating: 4.8,
+        imageUrl: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&q=80",
+        tags: ["microphone", "rode", "usb", "streaming", "podcast", "office"]
+    },
+    {
+        id: "PROD-ACC-01",
+        name: "Anker 737 Power Bank 24,000mAh (GaNPrime)",
+        description: "Ultra-powerful two-way charging with 140W max output and smart digital display showing power metrics.",
+        price: 109.99,
+        category: "ACCESSORIES",
+        categoryDisplay: "Accessories",
+        stockQuantity: 35,
+        rating: 4.8,
+        imageUrl: "https://images.unsplash.com/photo-1609592424369-07440b8a4f3a?w=500&q=80",
+        tags: ["powerbank", "anker", "charger", "battery", "usb-c"]
+    },
+    {
+        id: "PROD-GAME-01",
+        name: "Sony PlayStation DualSense Wireless Controller",
+        description: "Immersive haptic feedback, dynamic adaptive triggers, and built-in microphone in an iconic ergonomic design.",
+        price: 69.99,
+        category: "GAMING",
+        categoryDisplay: "Gaming",
+        stockQuantity: 40,
+        rating: 4.8,
+        imageUrl: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?w=500&q=80",
+        tags: ["gaming", "playstation", "controller", "sony", "dualsense"]
+    },
+    {
+        id: "PROD-GAME-02",
+        name: "Razer BlackShark V2 Pro Gaming Headset",
+        description: "Wireless esports headset with Razer TriForce Titanium 50mm drivers and HyperClear supercardioid mic.",
+        price: 179.99,
+        category: "GAMING",
+        categoryDisplay: "Gaming",
+        stockQuantity: 14,
+        rating: 4.6,
+        imageUrl: "https://images.unsplash.com/photo-1599669454699-248893623440?w=500&q=80",
+        tags: ["gaming", "headset", "razer", "audio", "esports"]
+    }
+];
+
+// ============================================================================
+// MAIN APP & CATALOG MANAGER
+// ============================================================================
+const app = {
+    products: [...SEED_PRODUCTS],
+    selectedCategory: 'ALL',
+    searchQuery: '',
+    currentSort: 'featured',
+
+    async init() {
+        this.renderProducts();
+        await this.checkBackendStatus();
+        await this.loadProducts();
+        await cartManager.loadCart();
+    },
+
+    async checkBackendStatus() {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1200);
+            const res = await fetch(`${API_BASE}/api/products`, { 
+                headers: getHeaders(), 
+                signal: controller.signal 
+            });
+            clearTimeout(timeoutId);
+            if (res.ok) {
+                isBackendAvailable = true;
+                this.updateModeIndicator(true);
+                return;
+            }
+        } catch (e) {
+            // Backend offline, fallback active
+        }
+        isBackendAvailable = false;
+        this.updateModeIndicator(false);
+    },
+
+    updateModeIndicator(isOnline) {
+        let badge = document.getElementById('backendStatusBadge');
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.id = 'backendStatusBadge';
+            badge.style.fontSize = '0.72rem';
+            badge.style.fontWeight = '700';
+            badge.style.padding = '3px 8px';
+            badge.style.borderRadius = '9999px';
+            badge.style.marginLeft = '8px';
+            const navText = document.querySelector('.logo-text');
+            if (navText) navText.appendChild(badge);
+        }
+
+        if (isOnline) {
+            badge.textContent = '🟢 Server Online';
+            badge.style.background = 'rgba(16, 185, 129, 0.2)';
+            badge.style.color = '#34d399';
+            badge.style.border = '1px solid rgba(16, 185, 129, 0.4)';
+        } else {
+            badge.textContent = '⚡ Instant Mode';
+            badge.style.background = 'rgba(99, 102, 241, 0.2)';
+            badge.style.color = '#a5b4fc';
+            badge.style.border = '1px solid rgba(99, 102, 241, 0.4)';
+        }
+    },
+
+    async loadProducts() {
+        if (isBackendAvailable) {
+            try {
+                let url = `${API_BASE}/api/products`;
+                const params = new URLSearchParams();
+                if (this.selectedCategory !== 'ALL') params.append('category', this.selectedCategory);
+                if (this.searchQuery.trim()) params.append('query', this.searchQuery.trim());
+                if ([...params].length > 0) url += `?${params.toString()}`;
+
+                const res = await fetch(url, { headers: getHeaders() });
+                if (res.ok) {
+                    this.products = await res.json();
+                    this.renderProducts();
+                    return;
+                }
+            } catch (err) {
+                console.warn('Backend fetch failed, using local catalog:', err);
+            }
+        }
+
+        // Local filtering
+        let list = [...SEED_PRODUCTS];
+        if (this.selectedCategory !== 'ALL') {
+            list = list.filter(p => p.category === this.selectedCategory);
+        }
+        if (this.searchQuery.trim()) {
+            const qTokens = this.searchQuery.toLowerCase().trim().split(/\s+/);
+            list = list.filter(p => {
+                const pText = (p.name + " " + p.description + " " + p.tags.join(" ")).toLowerCase();
+                return qTokens.every(tok => pText.includes(tok));
+            });
+        }
+        this.products = list;
+        this.renderProducts();
+    },
+
+    renderProducts() {
+        const grid = document.getElementById('productGrid');
+        const countLabel = document.getElementById('productCountLabel');
+        const searchClear = document.getElementById('clearSearchBtn');
+
+        if (!grid) return;
+        if (searchClear) {
+            searchClear.style.display = this.searchQuery ? 'block' : 'none';
+        }
+
+        let sorted = [...this.products];
+        if (this.currentSort === 'price-asc') {
+            sorted.sort((a, b) => a.price - b.price);
+        } else if (this.currentSort === 'price-desc') {
+            sorted.sort((a, b) => b.price - a.price);
+        } else if (this.currentSort === 'name') {
+            sorted.sort((a, b) => a.name.localeCompare(b.name));
+        } else {
+            sorted.sort((a, b) => b.rating - a.rating);
+        }
+
+        if (countLabel) {
+            countLabel.textContent = `Showing ${sorted.length} item${sorted.length === 1 ? '' : 's'}`;
+        }
+
+        if (sorted.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px; color: var(--text-muted);">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🔍</div>
+                    <h3>No products found</h3>
+                    <p>Try searching for different keywords or clear your filters.</p>
+                    <button class="btn btn-secondary" style="margin-top: 14px;" onclick="app.resetFilters()">Clear Filters</button>
+                </div>
+            `;
+            return;
+        }
+
+        grid.innerHTML = sorted.map(p => {
+            const stockClass = p.stockQuantity <= 5 ? 'stock-low' : 'stock-in';
+            const stockLabel = p.stockQuantity <= 5 ? `Low Stock (${p.stockQuantity})` : `In Stock (${p.stockQuantity})`;
+            return `
+                <div class="product-card" data-id="${p.id}">
+                    <div class="product-img-box">
+                        <img src="${p.imageUrl}" alt="${p.name}" loading="lazy">
+                        <span class="product-category-tag">${p.categoryDisplay || p.category}</span>
+                        <span class="product-stock-tag ${stockClass}">${stockLabel}</span>
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-rating">
+                            <span>★</span> <strong>${p.rating.toFixed(1)}</strong>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">(verified)</span>
+                        </div>
+                        <p class="product-desc">${p.description}</p>
+                        <div class="product-footer">
+                            <span class="product-price">$${p.price.toFixed(2)}</span>
+                            <button class="btn btn-add-cart" onclick="cartManager.addItem('${p.id}', 1)">
+                                <span>🛒</span> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    },
+
+    setCategory(cat) {
+        this.selectedCategory = cat;
+        document.querySelectorAll('.cat-pill').forEach(pill => {
+            pill.classList.toggle('active', pill.dataset.category === cat);
+        });
+        const sectionTitle = document.getElementById('sectionTitle');
+        if (sectionTitle) {
+            sectionTitle.textContent = cat === 'ALL' ? 'Featured Products' : `${cat} Products`;
+        }
+        this.loadProducts();
+    },
+
+    handleSearch(val) {
+        this.searchQuery = val;
+        this.loadProducts();
+    },
+
+    clearSearch() {
+        const input = document.getElementById('searchInput');
+        if (input) input.value = '';
+        this.searchQuery = '';
+        this.loadProducts();
+    },
+
+    handleSort(sortVal) {
+        this.currentSort = sortVal;
+        this.renderProducts();
+    },
+
+    resetFilters() {
+        const input = document.getElementById('searchInput');
+        if (input) input.value = '';
+        this.searchQuery = '';
+        this.setCategory('ALL');
+    }
+};
+
+// ============================================================================
+// CART MANAGEMENT (Local Engine + Backend Sync)
+// ============================================================================
+const cartManager = {
+    cart: { items: [], subtotal: 0, discountAmount: 0, tax: 0, shippingFee: 0, total: 0, totalItemCount: 0, appliedCoupon: null },
+
+    async loadCart() {
+        // Try backend first
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart`, { headers: getHeaders() });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    return;
+                }
+            } catch (err) {
+                console.warn('Cart backend load failed, using local cart:', err);
+            }
+        }
+
+        // Load local cart from localStorage
+        const stored = localStorage.getItem('novacart_local_cart');
+        if (stored) {
+            try {
+                this.cart = JSON.parse(stored);
+            } catch (e) {}
+        }
+        this.recalculate();
+        this.updateUi();
+    },
+
+    saveLocal() {
+        localStorage.setItem('novacart_local_cart', JSON.stringify(this.cart));
+    },
+
+    recalculate() {
+        let subtotal = 0;
+        let count = 0;
+        this.cart.items.forEach(item => {
+            item.subtotal = Math.round(item.price * item.quantity * 100) / 100;
+            subtotal += item.subtotal;
+            count += item.quantity;
+        });
+
+        this.cart.subtotal = Math.round(subtotal * 100) / 100;
+        this.cart.totalItemCount = count;
+
+        // Shipping
+        if (this.cart.items.length === 0) {
+            this.cart.shippingFee = 0;
+        } else if (this.cart.appliedCoupon && this.cart.appliedCoupon.type === 'FREE_SHIPPING') {
+            this.cart.shippingFee = 0;
+        } else {
+            this.cart.shippingFee = this.cart.subtotal >= 50.0 ? 0 : 5.99;
+        }
+
+        // Discount
+        let discount = 0;
+        if (this.cart.appliedCoupon && this.cart.items.length > 0) {
+            const c = this.cart.appliedCoupon;
+            if (c.type === 'PERCENTAGE') {
+                discount = Math.round((this.cart.subtotal * (c.value / 100)) * 100) / 100;
+            } else if (c.type === 'FIXED_AMOUNT') {
+                discount = Math.min(c.value, this.cart.subtotal);
+            } else if (c.type === 'FREE_SHIPPING') {
+                discount = 5.99;
+            }
+        }
+        this.cart.discountAmount = discount;
+
+        // Tax 8%
+        const taxable = Math.max(0, this.cart.subtotal - discount);
+        this.cart.tax = Math.round(taxable * 0.08 * 100) / 100;
+
+        // Total
+        if (this.cart.items.length === 0) {
+            this.cart.total = 0;
+        } else {
+            this.cart.total = Math.round((taxable + this.cart.tax + this.cart.shippingFee) * 100) / 100;
+        }
+
+        this.saveLocal();
+    },
+
+    async addItem(productId, quantity = 1) {
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/items`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ productId, quantity })
+                });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    showToast(`Added to cart! Total: $${this.cart.total.toFixed(2)}`);
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        // Local engine
+        const product = SEED_PRODUCTS.find(p => p.id === productId);
+        if (!product) {
+            showToast('Product not found', 'error');
+            return;
+        }
+
+        let existing = this.cart.items.find(i => i.productId === productId);
+        if (existing) {
+            existing.quantity += quantity;
+        } else {
+            this.cart.items.push({
+                productId: product.id,
+                productName: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+                quantity: quantity,
+                subtotal: product.price * quantity,
+                stockQuantity: product.stockQuantity
+            });
+        }
+
+        this.recalculate();
+        this.updateUi();
+        showToast(`Added ${quantity}x ${product.name} to cart! Total: $${this.cart.total.toFixed(2)}`);
+    },
+
+    async updateQuantity(productId, quantity) {
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/items`, {
+                    method: 'PUT',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ productId, quantity })
+                });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        // Local
+        if (quantity <= 0) {
+            this.removeItem(productId);
+            return;
+        }
+        const item = this.cart.items.find(i => i.productId === productId);
+        if (item) {
+            item.quantity = quantity;
+            this.recalculate();
+            this.updateUi();
+        }
+    },
+
+    async removeItem(productId) {
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/items?productId=${encodeURIComponent(productId)}`, {
+                    method: 'DELETE',
+                    headers: getHeaders()
+                });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    showToast('Item removed from cart');
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        // Local
+        this.cart.items = this.cart.items.filter(i => i.productId !== productId);
+        this.recalculate();
+        this.updateUi();
+        showToast('Item removed from cart');
+    },
+
+    async applyCoupon() {
+        const input = document.getElementById('couponInput');
+        const code = input ? input.value.trim().toUpperCase() : '';
+        if (!code) {
+            showToast('Please enter a coupon code', 'error');
+            return;
+        }
+
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/coupon`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ code })
+                });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    if (input) input.value = '';
+                    showToast(`Coupon ${code} applied successfully!`);
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        // Local Coupon Engine
+        const COUPONS = {
+            'WELCOME10': { code: 'WELCOME10', type: 'PERCENTAGE', value: 10, min: 20 },
+            'SAVE20': { code: 'SAVE20', type: 'FIXED_AMOUNT', value: 20, min: 100 },
+            'FREESHIP': { code: 'FREESHIP', type: 'FREE_SHIPPING', value: 5.99, min: 0 },
+            'TECH50': { code: 'TECH50', type: 'FIXED_AMOUNT', value: 50, min: 300 },
+            'GAMER15': { code: 'GAMER15', type: 'PERCENTAGE', value: 15, min: 75 }
+        };
+
+        const coupon = COUPONS[code];
+        if (!coupon) {
+            showToast(`Invalid coupon code: '${code}'`, 'error');
+            return;
+        }
+
+        if (this.cart.subtotal < coupon.min) {
+            showToast(`Coupon ${code} requires minimum order of $${coupon.min.toFixed(2)}`, 'error');
+            return;
+        }
+
+        this.cart.appliedCoupon = coupon;
+        this.recalculate();
+        this.updateUi();
+        if (input) input.value = '';
+        showToast(`Coupon ${code} applied! Discount: $${this.cart.discountAmount.toFixed(2)}`);
+    },
+
+    async removeCoupon() {
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/coupon`, { method: 'DELETE', headers: getHeaders() });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    showToast('Coupon removed');
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        this.cart.appliedCoupon = null;
+        this.recalculate();
+        this.updateUi();
+        showToast('Coupon removed');
+    },
+
+    async clearCart() {
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/cart/clear`, { method: 'POST', headers: getHeaders() });
+                if (res.ok) {
+                    this.cart = await res.json();
+                    this.updateUi();
+                    showToast('Shopping cart cleared');
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        this.cart.items = [];
+        this.cart.appliedCoupon = null;
+        this.recalculate();
+        this.updateUi();
+        showToast('Shopping cart cleared');
+    },
+
+    updateUi() {
+        const headerBadge = document.getElementById('cartCountBadge');
+        const headerSubtotal = document.getElementById('cartHeaderSubtotal');
+        const drawerCount = document.getElementById('drawerCartCount');
+
+        if (headerBadge) headerBadge.textContent = this.cart.totalItemCount || 0;
+        if (headerSubtotal) headerSubtotal.textContent = `$${(this.cart.total || 0).toFixed(2)}`;
+        if (drawerCount) drawerCount.textContent = `${this.cart.totalItemCount || 0} item${this.cart.totalItemCount === 1 ? '' : 's'}`;
+
+        const freeShipThreshold = 50.0;
+        const subtotal = this.cart.subtotal || 0;
+        const shippingStatus = document.getElementById('shippingStatusText');
+        const shippingFill = document.getElementById('shippingFill');
+
+        if (shippingStatus && shippingFill) {
+            if (subtotal >= freeShipThreshold || (this.cart.appliedCoupon && this.cart.appliedCoupon.type === 'FREE_SHIPPING')) {
+                shippingStatus.innerHTML = '🎉 You unlocked <strong>FREE Shipping</strong>!';
+                shippingFill.style.width = '100%';
+            } else {
+                const diff = (freeShipThreshold - subtotal).toFixed(2);
+                shippingStatus.innerHTML = `Add <strong>$${diff}</strong> more for <strong>FREE shipping</strong>!`;
+                const pct = Math.min(100, Math.round((subtotal / freeShipThreshold) * 100));
+                shippingFill.style.width = `${pct}%`;
+            }
+        }
+
+        const container = document.getElementById('cartItemsContainer');
+        const footer = document.getElementById('cartDrawerFooter');
+
+        if (!this.cart.items || this.cart.items.length === 0) {
+            if (container) {
+                container.innerHTML = `
+                    <div class="empty-cart-state">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h4>Your Cart is Empty</h4>
+                        <p style="font-size: 0.85rem; margin-top: 6px;">Looks like you haven't added any gear yet.</p>
+                        <button class="btn btn-secondary btn-sm" style="margin-top: 14px;" onclick="cartManager.closeDrawer()">Start Shopping</button>
+                    </div>
+                `;
+            }
+            if (footer) footer.style.opacity = '0.5';
+        } else {
+            if (footer) footer.style.opacity = '1';
+            if (container) {
+                container.innerHTML = this.cart.items.map(item => `
+                    <div class="cart-item-card">
+                        <img src="${item.imageUrl}" class="cart-item-img" alt="${item.productName}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-top">
+                                <span class="cart-item-name">${item.productName}</span>
+                                <button class="btn-remove-item" onclick="cartManager.removeItem('${item.productId}')" title="Remove item">✕</button>
+                            </div>
+                            <div class="cart-item-bottom">
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="cartManager.updateQuantity('${item.productId}', ${item.quantity - 1})">-</button>
+                                    <span class="qty-display">${item.quantity}</span>
+                                    <button class="qty-btn" onclick="cartManager.updateQuantity('${item.productId}', ${item.quantity + 1})">+</button>
+                                </div>
+                                <span class="cart-item-price">$${item.subtotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        const couponInputGroup = document.getElementById('couponInputGroup');
+        const appliedTag = document.getElementById('appliedCouponTag');
+        const couponName = document.getElementById('appliedCouponName');
+
+        if (this.cart.appliedCoupon) {
+            if (couponInputGroup) couponInputGroup.style.display = 'none';
+            if (appliedTag) appliedTag.style.display = 'flex';
+            if (couponName) couponName.textContent = `🏷️ ${this.cart.appliedCoupon.code} (-$${this.cart.discountAmount.toFixed(2)})`;
+        } else {
+            if (couponInputGroup) couponInputGroup.style.display = 'flex';
+            if (appliedTag) appliedTag.style.display = 'none';
+        }
+
+        const summarySubtotal = document.getElementById('summarySubtotal');
+        const discountRow = document.getElementById('discountRow');
+        const summaryDiscount = document.getElementById('summaryDiscount');
+        const summaryTax = document.getElementById('summaryTax');
+        const summaryShipping = document.getElementById('summaryShipping');
+        const summaryTotal = document.getElementById('summaryTotal');
+        const checkoutModalTotal = document.getElementById('checkoutModalTotal');
+
+        if (summarySubtotal) summarySubtotal.textContent = `$${(this.cart.subtotal || 0).toFixed(2)}`;
+        if (discountRow) {
+            discountRow.style.display = this.cart.discountAmount > 0 ? 'flex' : 'none';
+            if (summaryDiscount) summaryDiscount.textContent = `-$${(this.cart.discountAmount || 0).toFixed(2)}`;
+        }
+        if (summaryTax) summaryTax.textContent = `$${(this.cart.tax || 0).toFixed(2)}`;
+        if (summaryShipping) {
+            summaryShipping.textContent = this.cart.shippingFee === 0 ? 'FREE' : `$${(this.cart.shippingFee || 0).toFixed(2)}`;
+        }
+        if (summaryTotal) summaryTotal.textContent = `$${(this.cart.total || 0).toFixed(2)}`;
+        if (checkoutModalTotal) checkoutModalTotal.textContent = `$${(this.cart.total || 0).toFixed(2)}`;
+    },
+
+    openDrawer() {
+        document.getElementById('cartDrawer').classList.add('open');
+        document.getElementById('cartBackdrop').classList.add('open');
+    },
+
+    closeDrawer() {
+        document.getElementById('cartDrawer').classList.remove('open');
+        document.getElementById('cartBackdrop').classList.remove('open');
+    }
+};
+
+// ============================================================================
+// CHECKOUT MANAGER
+// ============================================================================
+const checkoutManager = {
+    selectedPaymentMethod: 'CREDIT_CARD',
+
+    openModal() {
+        if (!cartManager.cart.items || cartManager.cart.items.length === 0) {
+            showToast('Your cart is empty. Please add items before checking out.', 'error');
+            return;
+        }
+        cartManager.closeDrawer();
+        document.getElementById('checkoutBackdrop').classList.add('open');
+        document.getElementById('checkoutBody').style.display = 'block';
+        document.getElementById('orderReceiptView').style.display = 'none';
+    },
+
+    closeModal() {
+        document.getElementById('checkoutBackdrop').classList.remove('open');
+    },
+
+    selectPayment(method) {
+        this.selectedPaymentMethod = method;
+        const cardFields = document.getElementById('paymentCardFields');
+        const upiFields = document.getElementById('paymentUpiFields');
+        if (cardFields) cardFields.style.display = method === 'CREDIT_CARD' ? 'block' : 'none';
+        if (upiFields) upiFields.style.display = method === 'UPI' ? 'block' : 'none';
+    },
+
+    async submitOrder(event) {
+        event.preventDefault();
+
+        const customerName = document.getElementById('custName').value.trim();
+        const customerEmail = document.getElementById('custEmail').value.trim();
+        const customerPhone = document.getElementById('custPhone').value.trim();
+        const shippingAddress = document.getElementById('shippingAddress').value.trim();
+
+        let paymentDetails = '';
+        if (this.selectedPaymentMethod === 'CREDIT_CARD') {
+            paymentDetails = document.getElementById('cardNum').value.trim();
+        } else if (this.selectedPaymentMethod === 'UPI') {
+            paymentDetails = document.getElementById('upiId').value.trim();
+        }
+
+        const payload = {
+            customerName,
+            customerEmail,
+            customerPhone,
+            shippingAddress,
+            paymentMethod: this.selectedPaymentMethod,
+            paymentDetails
+        };
+
+        const submitBtn = document.getElementById('submitOrderBtn');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing Payment... 🔒';
+        }
+
+        let orderData = null;
+
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/checkout`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    orderData = await res.json();
+                }
+            } catch (err) {}
+        }
+
+        // Local fallback order generation
+        if (!orderData) {
+            orderData = {
+                orderId: "ORD-" + Math.floor(100000 + Math.random() * 900000) + "-" + Math.random().toString(36).substring(2, 6).toUpperCase(),
+                trackingNumber: "TRK-" + Math.random().toString(36).substring(2, 12).toUpperCase(),
+                transactionId: "TXN-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase(),
+                totalAmount: cartManager.cart.total,
+                shippingAddress: shippingAddress
+            };
+            cartManager.clearCart();
+        }
+
+        // Show receipt
+        document.getElementById('checkoutBody').style.display = 'none';
+        const receipt = document.getElementById('orderReceiptView');
+        receipt.style.display = 'block';
+
+        document.getElementById('receiptOrderId').textContent = orderData.orderId;
+        document.getElementById('receiptTracking').textContent = orderData.trackingNumber;
+        document.getElementById('receiptTransaction').textContent = orderData.transactionId;
+        document.getElementById('receiptTotal').textContent = `$${orderData.totalAmount.toFixed(2)}`;
+        document.getElementById('receiptAddress').textContent = orderData.shippingAddress;
+
+        await cartManager.loadCart();
+        showToast(`Order ${orderData.orderId} confirmed!`);
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Place Order Now 🚀';
+        }
+    },
+
+    finishAndShop() {
+        this.closeModal();
+    }
+};
+
+// ============================================================================
+// AI CHATBOT ASSISTANT (Dual-Mode: Backend + Local NLP)
+// ============================================================================
+const chatAssistant = {
+    isOpen: false,
+
+    toggle() {
+        this.isOpen = !this.isOpen;
+        const widget = document.getElementById('chatWidget');
+        widget.classList.toggle('open', this.isOpen);
+        if (this.isOpen) {
+            setTimeout(() => {
+                const input = document.getElementById('chatInputField');
+                if (input) input.focus();
+            }, 300);
+        }
+    },
+
+    openWithPrompt(prompt) {
+        if (!this.isOpen) this.toggle();
+        this.sendPrompt(prompt);
+    },
+
+    async sendMessage(event) {
+        event.preventDefault();
+        const input = document.getElementById('chatInputField');
+        const text = input ? input.value.trim() : '';
+        if (!text) return;
+
+        input.value = '';
+        this.appendMessage('user', text);
+        await this.queryAi(text);
+    },
+
+    sendPrompt(promptText) {
+        this.appendMessage('user', promptText);
+        this.queryAi(promptText);
+    },
+
+    async queryAi(queryText) {
+        const typingId = this.appendTypingIndicator();
+
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/ai/chat`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ message: queryText })
+                });
+                if (res.ok) {
+                    this.removeTypingIndicator(typingId);
+                    const data = await res.json();
+                    this.appendMessage('bot', data.message, data.data, data.action);
+                    this.updateSuggestions(data.suggestions);
+
+                    if (data.action === 'CART_UPDATED') await cartManager.loadCart();
+                    else if (data.action === 'OPEN_CHECKOUT') checkoutManager.openModal();
+                    else if (data.action === 'VIEW_CART') cartManager.openDrawer();
+                    return;
+                }
+            } catch (err) {}
+        }
+
+        // Local NLP Engine Fallback
+        setTimeout(() => {
+            this.removeTypingIndicator(typingId);
+            const localResp = this.processLocalNlp(queryText);
+            this.appendMessage('bot', localResp.message, localResp.data, localResp.action);
+            this.updateSuggestions(localResp.suggestions);
+
+            if (localResp.action === 'CART_UPDATED') {
+                cartManager.updateUi();
+            } else if (localResp.action === 'OPEN_CHECKOUT') {
+                checkoutManager.openModal();
+            } else if (localResp.action === 'VIEW_CART') {
+                cartManager.openDrawer();
+            }
+        }, 400);
+    },
+
+    processLocalNlp(query) {
+        const text = query.toLowerCase();
+
+        // 1. Add to cart
+        if (text.startsWith('add') || text.includes('put in cart') || text.includes('add to cart')) {
+            const clean = text.replace(/^(add|put)\s+/, '').replace(/\s+(to|into|in)\s+(my\s+)?cart.*$/, '').trim();
+            const matched = SEED_PRODUCTS.find(p => p.name.toLowerCase().includes(clean) || p.tags.some(t => clean.includes(t)));
+            if (matched) {
+                cartManager.addItem(matched.id, 1);
+                return {
+                    message: `Added **${matched.name}** to your cart ($${matched.price.toFixed(2)}). Your cart total is now **$${cartManager.cart.total.toFixed(2)}**.`,
+                    action: 'CART_UPDATED',
+                    suggestions: ['View Cart', 'Proceed to Checkout', 'Recommend accessories']
+                };
+            }
+        }
+
+        // 2. View Cart
+        if (text.includes('cart') || text.includes('my items')) {
+            if (cartManager.cart.items.length === 0) {
+                return {
+                    message: "Your cart is currently empty. Would you like some product recommendations?",
+                    action: 'VIEW_CART',
+                    suggestions: ['Show popular headphones', 'Browse Laptops', 'Show Gaming gear']
+                };
+            }
+            return {
+                message: `You have **${cartManager.cart.totalItemCount} items** in your cart. Subtotal: **$${cartManager.cart.subtotal.toFixed(2)}**, Total: **$${cartManager.cart.total.toFixed(2)}**.`,
+                action: 'VIEW_CART',
+                suggestions: ['Proceed to Checkout', 'Apply coupon WELCOME10', 'Empty Cart']
+            };
+        }
+
+        // 3. Checkout
+        if (text.includes('checkout') || text.includes('pay') || text.includes('place order')) {
+            return {
+                message: `You're ready to checkout **${cartManager.cart.totalItemCount} items** for a total of **$${cartManager.cart.total.toFixed(2)}**! Opening checkout window...`,
+                action: 'OPEN_CHECKOUT',
+                suggestions: ['Place Order', 'Edit Cart']
+            };
+        }
+
+        // 4. Coupons
+        if (text.includes('coupon') || text.includes('code') || text.includes('promo')) {
+            const m = text.match(/(welcome10|save20|freeship|tech50|gamer15)/i);
+            if (m) {
+                const code = m[1].toUpperCase();
+                document.getElementById('couponInput').value = code;
+                cartManager.applyCoupon();
+                return {
+                    message: `Applied coupon **${code}**! Your new total is **$${cartManager.cart.total.toFixed(2)}**.`,
+                    action: 'CART_UPDATED',
+                    suggestions: ['Proceed to Checkout', 'View Cart']
+                };
+            }
+            return {
+                message: "Available coupons: **WELCOME10** (10% off), **SAVE20** ($20 off over $100), and **FREESHIP** (Free delivery).",
+                action: 'NONE',
+                suggestions: ['Apply WELCOME10', 'Apply SAVE20', 'Apply FREESHIP']
+            };
+        }
+
+        // 5. Recommendations / Search
+        const recs = SEED_PRODUCTS.slice(0, 3);
+        return {
+            message: `Here are our top recommended products for you:`,
+            action: 'SHOW_RECOMMENDATIONS',
+            data: recs,
+            suggestions: ['Add Sony headphones', 'Show Laptops', 'What is in my cart?']
+        };
+    },
+
+    appendMessage(sender, text, data = null, action = null) {
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${sender}-bubble`;
+
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                                .replace(/\n/g, '<br>');
+
+        let extraHtml = '';
+        if (data && Array.isArray(data) && (action === 'SHOW_PRODUCTS' || action === 'SHOW_RECOMMENDATIONS')) {
+            extraHtml = `
+                <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                    ${data.slice(0, 3).map(p => `
+                        <div class="chat-mini-card">
+                            <div>
+                                <strong style="font-size: 0.85rem; color: #ffffff;">${p.name}</strong>
+                                <div style="font-size: 0.8rem; color: #34d399;">$${p.price.toFixed(2)}</div>
+                            </div>
+                            <button class="btn btn-add-cart btn-sm" onclick="cartManager.addItem('${p.id}', 1)" style="padding: 4px 10px; font-size: 0.75rem;">
+                                Add
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        bubble.innerHTML = `<div class="bubble-content">${formattedText}${extraHtml}</div>`;
+        container.appendChild(bubble);
+        container.scrollTop = container.scrollHeight;
+    },
+
+    appendTypingIndicator() {
+        const container = document.getElementById('chatMessages');
+        const id = 'typing-' + Date.now();
+        const bubble = document.createElement('div');
+        bubble.id = id;
+        bubble.className = 'chat-bubble bot-bubble';
+        bubble.innerHTML = '<div class="bubble-content" style="font-style: italic; color: var(--text-muted);">Nova is thinking... ✨</div>';
+        container.appendChild(bubble);
+        container.scrollTop = container.scrollHeight;
+        return id;
+    },
+
+    removeTypingIndicator(id) {
+        const el = document.getElementById(id);
+        if (el) el.remove();
+    },
+
+    updateSuggestions(suggestions) {
+        const container = document.getElementById('chatSuggestions');
+        if (!container || !suggestions || suggestions.length === 0) return;
+
+        container.innerHTML = suggestions.map(s => `
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('${s.replace(/'/g, "\\'")}')">${s}</button>
+        `).join('');
+    }
+};
+
+// ============================================================================
+// VOICE ASSISTANT (Dual-Mode: Backend + Web Speech STT/TTS)
+// ============================================================================
+const voiceAssistant = {
+    recognition: null,
+    isListening: false,
+
+    init() {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRec) {
+            this.recognition = new SpeechRec();
+            this.recognition.continuous = false;
+            this.recognition.interimResults = true;
+            this.recognition.lang = 'en-US';
+
+            this.recognition.onstart = () => {
+                this.isListening = true;
+                this.setUiListening(true);
+            };
+
+            this.recognition.onresult = (event) => {
+                let interim = '';
+                let final = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final += event.results[i][0].transcript;
+                    } else {
+                        interim += event.results[i][0].transcript;
+                    }
+                }
+
+                const transcriptEl = document.getElementById('voiceTranscript');
+                if (transcriptEl) transcriptEl.textContent = `"${final || interim}"`;
+
+                if (final) this.processTranscript(final);
+            };
+
+            this.recognition.onerror = (event) => {
+                const statusEl = document.getElementById('voiceStatus');
+                if (statusEl) statusEl.textContent = `Listening stopped. Click any voice test chip below!`;
+                this.setUiListening(false);
+            };
+
+            this.recognition.onend = () => {
+                this.isListening = false;
+                this.setUiListening(false);
+            };
+        }
+    },
+
+    toggle() {
+        const modal = document.getElementById('voiceModal');
+        const isVisible = modal.style.display !== 'none';
+        if (isVisible) this.stopListening();
+        else this.startListening();
+    },
+
+    startListening() {
+        const modal = document.getElementById('voiceModal');
+        modal.style.display = 'flex';
+
+        const transcriptEl = document.getElementById('voiceTranscript');
+        if (transcriptEl) transcriptEl.textContent = '"Listening for your command..."';
+
+        const respBox = document.getElementById('voiceResponseBox');
+        if (respBox) respBox.style.display = 'none';
+
+        if (this.recognition) {
+            try { this.recognition.start(); } catch (e) {}
+        } else {
+            const statusEl = document.getElementById('voiceStatus');
+            if (statusEl) statusEl.textContent = 'Click any voice command chip below to test!';
+        }
+    },
+
+    stopListening() {
+        if (this.recognition && this.isListening) this.recognition.stop();
+        const modal = document.getElementById('voiceModal');
+        modal.style.display = 'none';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    },
+
+    setUiListening(listening) {
+        const statusEl = document.getElementById('voiceStatus');
+        const bars = document.getElementById('waveformBars');
+        if (statusEl) statusEl.textContent = listening ? 'Listening... Speak now 🎙️' : 'Processing audio... ✨';
+        if (bars) bars.style.opacity = listening ? '1' : '0.4';
+    },
+
+    simulateUtterance(command) {
+        const modal = document.getElementById('voiceModal');
+        modal.style.display = 'flex';
+
+        const transcriptEl = document.getElementById('voiceTranscript');
+        if (transcriptEl) transcriptEl.textContent = `"${command}"`;
+
+        this.processTranscript(command);
+    },
+
+    async processTranscript(transcript) {
+        const statusEl = document.getElementById('voiceStatus');
+        if (statusEl) statusEl.textContent = 'Assistant analyzing voice command... ⚡';
+
+        let spoken = "";
+        let action = "";
+
+        if (isBackendAvailable) {
+            try {
+                const res = await fetch(`${API_BASE}/api/ai/voice`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ transcript })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    spoken = data.spokenResponse;
+                    action = data.action;
+                }
+            } catch (err) {}
+        }
+
+        // Local speech fallback
+        if (!spoken) {
+            const clean = transcript.toLowerCase();
+            if (clean.includes('add') && (clean.includes('sony') || clean.includes('headphone'))) {
+                cartManager.addItem('PROD-AUDIO-01', 1);
+                spoken = "I've added Sony Wireless Headphones to your cart. Your new subtotal is $" + cartManager.cart.subtotal.toFixed(2) + ".";
+                action = "CART_UPDATED";
+            } else if (clean.includes('keyboard')) {
+                cartManager.addItem('PROD-OFF-02', 1);
+                spoken = "I've added Keychron Mechanical Keyboard to your cart.";
+                action = "CART_UPDATED";
+            } else if (clean.includes('cart')) {
+                spoken = "You have " + cartManager.cart.totalItemCount + " items in your cart with a total of $" + cartManager.cart.total.toFixed(2) + ".";
+                action = "VIEW_CART";
+            } else if (clean.includes('checkout')) {
+                spoken = "You are ready for checkout. Opening checkout form now.";
+                action = "OPEN_CHECKOUT";
+            } else {
+                spoken = "I found products matching your request. Let me know if you would like me to add anything.";
+                action = "NONE";
+            }
+        }
+
+        const respBox = document.getElementById('voiceResponseBox');
+        const respText = document.getElementById('assistantSpeechText');
+        if (respBox && respText) {
+            respBox.style.display = 'block';
+            respText.textContent = spoken;
+        }
+
+        if (statusEl) statusEl.textContent = 'Speaking response... 🔊';
+        this.speak(spoken);
+
+        if (action === 'CART_UPDATED') {
+            cartManager.openDrawer();
+        } else if (action === 'OPEN_CHECKOUT') {
+            checkoutManager.openModal();
+        } else if (action === 'VIEW_CART') {
+            cartManager.openDrawer();
+        }
+    },
+
+    speak(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        window.speechSynthesis.speak(utterance);
+    }
+};
+
+// ============================================================================
+// BOOTSTRAP ON LOAD
+// ============================================================================
+window.addEventListener('DOMContentLoaded', () => {
+    app.init();
+    voiceAssistant.init();
+});
+
+</script>
+</body>
+</html>
+

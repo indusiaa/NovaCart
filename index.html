@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaCart - AI & Voice Powered E-Commerce</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Promotional Banner -->
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <span class="badge-fire">🔥 SPECIAL OFFERS</span>
+            <span>Use coupon <code class="coupon-chip" onclick="cartManager.quickApply('WELCOME10')">WELCOME10</code> for 10% off or <code class="coupon-chip" onclick="cartManager.quickApply('SAVE20')">SAVE20</code> on orders over $100! Free shipping on orders $50+.</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo-area" onclick="app.resetFilters()">
+                <div class="logo-icon-glow">✨</div>
+                <div class="logo-text">
+                    <span class="brand-title">Nova<span class="gradient-text">Cart</span></span>
+                    <span class="brand-badge">AI 2.0</span>
+                    <span class="live-pill" id="backendStatusBadge">⚡ Instant Mode</span>
+                </div>
+            </div>
+
+            <!-- Instant Search Bar -->
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search headphones, MacBook, keyboard, mice... (or ask AI)" oninput="app.handleSearch(this.value)">
+                <button class="clear-search-btn" id="clearSearchBtn" onclick="app.clearSearch()" style="display:none;">✕</button>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="nav-actions">
+                <!-- Voice Assistant Trigger -->
+                <button class="btn btn-voice-glow" onclick="voiceAssistant.toggle()" title="Talk to Voice Assistant">
+                    <span class="mic-wave">🎙️</span>
+                    <span class="btn-label">Voice Assistant</span>
+                </button>
+
+                <!-- AI Chatbot Trigger -->
+                <button class="btn btn-chat-glow" onclick="chatAssistant.toggle()" title="Open AI Chat Assistant">
+                    <span>💬</span>
+                    <span class="btn-label">AI Chat</span>
+                </button>
+
+                <!-- Shopping Cart Trigger -->
+                <button class="btn btn-cart-glow" onclick="cartManager.openDrawer()" title="View Cart">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCountBadge">0</span>
+                    <span class="cart-subtotal" id="cartHeaderSubtotal">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-layout">
+        <!-- Hero Section with Futuristic Conversational Shopping -->
+        <section class="hero-banner">
+            <div class="hero-left">
+                <div class="hero-pill">
+                    <span class="pulse-dot"></span> Conversational Shopping Assistant
+                </div>
+                <h1 class="hero-heading">
+                    The Smartest Way to Shop with <span class="gradient-text">AI & Voice</span>
+                </h1>
+                <p class="hero-subtext">
+                    Browse our premium electronics, use natural language chat, or just speak aloud.
+                    Say <em>"Add Sony headphones to my cart"</em> or <em>"Recommend top gaming gear"</em>.
+                </p>
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary btn-lg" onclick="voiceAssistant.startListening()">
+                        <span>🎙️</span> Try Voice Shopping
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="chatAssistant.openWithPrompt('What deals and recommendations do you have?')">
+                        <span>💬</span> Chat with AI
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-voice-card">
+                    <div class="voice-card-header">
+                        <span class="mic-icon-circle">🎙️</span>
+                        <div>
+                            <h4>Try Voice Commands</h4>
+                            <p>Click any voice prompt below:</p>
+                        </div>
+                    </div>
+                    <div class="command-pills">
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Show noise cancelling headphones')">
+                            <span>🔍</span> "Show noise cancelling headphones"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to my cart')">
+                            <span>🛒</span> "Add Sony headphones to my cart"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">
+                            <span>📦</span> "What is in my cart?"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Apply coupon SAVE20')">
+                            <span>🏷️</span> "Apply coupon SAVE20"
+                        </div>
+                        <div class="cmd-pill" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">
+                            <span>💳</span> "Proceed to checkout"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Filter Tabs & Controls -->
+        <section class="catalog-controls">
+            <div class="category-tabs" id="categoryTabs">
+                <button class="cat-pill active" data-category="ALL" onclick="app.setCategory('ALL')">✨ All Products</button>
+                <button class="cat-pill" data-category="AUDIO" onclick="app.setCategory('AUDIO')">🎧 Audio</button>
+                <button class="cat-pill" data-category="ELECTRONICS" onclick="app.setCategory('ELECTRONICS')">💻 Electronics</button>
+                <button class="cat-pill" data-category="WEARABLES" onclick="app.setCategory('WEARABLES')">⌚ Wearables</button>
+                <button class="cat-pill" data-category="HOME_OFFICE" onclick="app.setCategory('HOME_OFFICE')">💼 Home Office</button>
+                <button class="cat-pill" data-category="GAMING" onclick="app.setCategory('GAMING')">🎮 Gaming</button>
+                <button class="cat-pill" data-category="ACCESSORIES" onclick="app.setCategory('ACCESSORIES')">⚡ Accessories</button>
+            </div>
+
+            <div class="filter-controls">
+                <div class="sort-selector">
+                    <label for="sortSelect">Sort By:</label>
+                    <select id="sortSelect" onchange="app.handleSort(this.value)">
+                        <option value="featured">Top Rated / Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name">Name (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section class="products-section">
+            <div class="section-header">
+                <div>
+                    <h2 id="sectionTitle">Featured Gear</h2>
+                    <p class="section-subtitle">Top-tier tech with verified customer reviews and immediate dispatch</p>
+                </div>
+                <span class="product-count" id="productCountLabel">Loading catalog...</span>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Dynamically populated product cards -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Cart Drawer -->
+    <div class="cart-backdrop" id="cartBackdrop" onclick="cartManager.closeDrawer()"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-drawer-header">
+            <div class="cart-drawer-title">
+                <h3>Your Shopping Cart</h3>
+                <span class="cart-badge-count" id="drawerCartCount">0 items</span>
+            </div>
+            <button class="close-btn" onclick="cartManager.closeDrawer()" title="Close Cart">✕</button>
+        </div>
+
+        <!-- Free Shipping Progress Bar -->
+        <div class="shipping-progress-box" id="shippingProgressBar">
+            <div class="shipping-status-text" id="shippingStatusText">Add $50.00 more for FREE shipping!</div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="shippingFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Cart Items List -->
+        <div class="cart-items-container" id="cartItemsContainer">
+            <!-- Dynamically populated cart items -->
+        </div>
+
+        <!-- Cart Footer with Totals & Coupon -->
+        <div class="cart-drawer-footer" id="cartDrawerFooter">
+            <!-- Coupon Code Section -->
+            <div class="coupon-section">
+                <div class="coupon-input-group" id="couponInputGroup">
+                    <input type="text" id="couponInput" placeholder="Coupon Code (e.g. SAVE20)" uppercase>
+                    <button class="btn btn-secondary btn-sm" onclick="cartManager.applyCoupon()">Apply</button>
+                </div>
+                <div class="applied-coupon-tag" id="appliedCouponTag" style="display: none;">
+                    <span class="tag-label" id="appliedCouponName">COUPON</span>
+                    <button class="remove-coupon-btn" onclick="cartManager.removeCoupon()" title="Remove coupon">✕</button>
+                </div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span>Subtotal</span>
+                    <span id="summarySubtotal">$0.00</span>
+                </div>
+                <div class="price-row discount-row" id="discountRow" style="display: none;">
+                    <span>Discount Savings</span>
+                    <span id="summaryDiscount">-$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Estimated Tax (8%)</span>
+                    <span id="summaryTax">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Shipping</span>
+                    <span id="summaryShipping">$0.00</span>
+                </div>
+                <div class="price-row total-row">
+                    <span>Final Total</span>
+                    <span class="total-amount" id="summaryTotal">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="cart-action-buttons">
+                <button class="btn btn-primary btn-block btn-lg" onclick="checkoutManager.openModal()">
+                    Proceed to Checkout 🔒
+                </button>
+                <button class="btn btn-ghost btn-sm btn-block" onclick="cartManager.clearCart()">
+                    Empty Cart
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Multi-step Checkout Modal -->
+    <div class="modal-backdrop" id="checkoutBackdrop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>🔒 Express Checkout</h3>
+                <button class="close-btn" onclick="checkoutManager.closeModal()">✕</button>
+            </div>
+
+            <div class="checkout-body" id="checkoutBody">
+                <form id="checkoutForm" onsubmit="checkoutManager.submitOrder(event)">
+                    <!-- Customer Information -->
+                    <div class="form-section">
+                        <h4>1. Customer Details</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="custName">Full Name *</label>
+                                <input type="text" id="custName" required placeholder="Alex Mercer" value="Alex Mercer">
+                            </div>
+                            <div class="form-group">
+                                <label for="custEmail">Email Address *</label>
+                                <input type="email" id="custEmail" required placeholder="alex@example.com" value="alex@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="custPhone">Phone Number</label>
+                            <input type="tel" id="custPhone" placeholder="+1 (555) 019-2834" value="+1 (555) 019-2834">
+                        </div>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h4>2. Shipping Address</h4>
+                        <div class="form-group">
+                            <label for="shippingAddress">Street Address & Apartment *</label>
+                            <input type="text" id="shippingAddress" required placeholder="742 Evergreen Terrace, Springfield, OR 97477" value="742 Evergreen Terrace, Springfield, OR 97477">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-section">
+                        <h4>3. Payment Method</h4>
+                        <div class="payment-methods-grid">
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="CREDIT_CARD" checked onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">💳</span>
+                                    <span class="opt-title">Credit / Debit Card</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="UPI" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">⚡</span>
+                                    <span class="opt-title">Instant UPI</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="PAYPAL" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">🅿️</span>
+                                    <span class="opt-title">PayPal</span>
+                                </div>
+                            </label>
+                            <label class="payment-card-opt">
+                                <input type="radio" name="paymentMethod" value="CASH_ON_DELIVERY" onchange="checkoutManager.selectPayment(this.value)">
+                                <div class="payment-opt-content">
+                                    <span class="opt-icon">💵</span>
+                                    <span class="opt-title">Cash on Delivery</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Card Fields -->
+                        <div class="payment-extra-fields" id="paymentCardFields">
+                            <div class="form-group">
+                                <label for="cardNum">Card Number</label>
+                                <input type="text" id="cardNum" placeholder="4532 •••• •••• 8890" value="4532 8900 1234 5678" maxlength="19">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="cardExp">Expiry (MM/YY)</label>
+                                    <input type="text" id="cardExp" placeholder="12/28" value="12/28" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardCvv">CVV</label>
+                                    <input type="password" id="cardCvv" placeholder="•••" value="889" maxlength="4">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Fields -->
+                        <div class="payment-extra-fields" id="paymentUpiFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="upiId">UPI Virtual Payment Address (VPA)</label>
+                                <input type="text" id="upiId" placeholder="alex@okhdfcbank" value="alex@okhdfcbank">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Total Summary -->
+                    <div class="checkout-summary-bar">
+                        <span>Total Payable: <strong id="checkoutModalTotal">$0.00</strong></span>
+                    </div>
+
+                    <div class="modal-footer-actions">
+                        <button type="button" class="btn btn-secondary" onclick="checkoutManager.closeModal()">Back to Cart</button>
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitOrderBtn">Place Order Now 🚀</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Confirmation Success View -->
+            <div class="order-receipt-view" id="orderReceiptView" style="display: none;">
+                <div class="success-badge-icon">🎉</div>
+                <h3>Order Placed Successfully!</h3>
+                <p class="receipt-sub">Thank you for your purchase. Your order receipt and shipment tracking details:</p>
+                
+                <div class="receipt-card">
+                    <div class="receipt-row">
+                        <span>Order ID:</span>
+                        <strong class="receipt-id" id="receiptOrderId">ORD-000000</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Tracking Number:</span>
+                        <code id="receiptTracking">TRK-000000</code>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Transaction ID:</span>
+                        <code id="receiptTransaction">TXN-000000</code>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Total Paid:</span>
+                        <strong class="receipt-total" id="receiptTotal">$0.00</strong>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Delivery Address:</span>
+                        <span id="receiptAddress">Address</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer-actions">
+                    <button class="btn btn-primary btn-block" onclick="checkoutManager.finishAndShop()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot Drawer Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <div class="chat-bot-info">
+                <div class="chat-avatar">🤖</div>
+                <div>
+                    <div class="chat-title">Nova AI Assistant</div>
+                    <div class="chat-subtitle"><span class="online-dot"></span> Online • Natural Language Agent</div>
+                </div>
+            </div>
+            <button class="close-btn" onclick="chatAssistant.toggle()" title="Close Chat">✕</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble bot-bubble">
+                <div class="bubble-content">
+                    👋 Hi! I'm your AI Shopping Assistant. How can I help you today?
+                    <br><br>
+                    You can ask me to:
+                    <ul>
+                        <li>Search gear (e.g. <em>"Show headphones under $300"</em>)</li>
+                        <li>Add products to your cart (e.g. <em>"Add 2 Sony headphones"</em>)</li>
+                        <li>Apply discounts (e.g. <em>"Apply coupon SAVE20"</em>)</li>
+                        <li>Check your cart or proceed to checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Suggestion Chips -->
+        <div class="chat-suggestions" id="chatSuggestions">
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Recommend popular headphones')">🎧 Popular Headphones</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Show MacBook and monitors')">💻 Laptops & Monitors</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('What is in my cart?')">🛒 Check My Cart</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('Apply coupon WELCOME10')">🏷️ Apply WELCOME10</button>
+            <button class="suggestion-chip" onclick="chatAssistant.sendPrompt('What is your return policy?')">📦 Return Policy</button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form class="chat-input-bar" onsubmit="chatAssistant.sendMessage(event)">
+            <input type="text" id="chatInputField" placeholder="Type a request (e.g. 'Add Sony headphones')..." autocomplete="off">
+            <button type="button" class="chat-mic-btn" onclick="voiceAssistant.startListening()" title="Speak instead">🎙️</button>
+            <button type="submit" class="btn btn-primary chat-send-btn">Send</button>
+        </form>
+    </div>
+
+    <!-- Voice Assistant Modal Overlay & Waveform Visualizer -->
+    <div class="voice-modal-overlay" id="voiceModal" style="display: none;">
+        <div class="voice-modal-box">
+            <button class="close-btn voice-close" onclick="voiceAssistant.stopListening()">✕</button>
+            
+            <div class="voice-waveform-area">
+                <div class="voice-orb" id="voiceOrb">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring"></div>
+                    <span class="voice-mic-icon">🎙️</span>
+                </div>
+                <div class="waveform-bars" id="waveformBars">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                </div>
+            </div>
+
+            <div class="voice-status-text" id="voiceStatus">Listening... Speak now</div>
+            
+            <div class="voice-transcript-box">
+                <div class="transcript-label">Recognized Speech:</div>
+                <div class="transcript-text" id="voiceTranscript">"Say something like 'Add Sony headphones to cart'..."</div>
+            </div>
+
+            <div class="voice-response-box" id="voiceResponseBox" style="display: none;">
+                <div class="transcript-label">Assistant Spoke:</div>
+                <div class="assistant-speech-text" id="assistantSpeechText"></div>
+            </div>
+
+            <div class="voice-sample-actions">
+                <span class="sample-label">Or click to test voice command:</span>
+                <div class="sample-chips">
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Add Sony headphones to cart')">Add Sony Headphones</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Show mechanical keyboards')">Show Keyboards</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('What is in my cart?')">What's in my cart?</button>
+                    <button class="chip-btn" onclick="voiceAssistant.simulateUtterance('Proceed to checkout')">Checkout Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

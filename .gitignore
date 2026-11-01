@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+bin/
+target/
+.vscode/
+sources.txt
+*.log
