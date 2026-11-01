@@ -1,10 +1,10 @@
-@echo off
+﻿@echo off
 setlocal
 cd /d "%~dp0"
-title NovaCart - AI & Voice Powered E-Commerce
+title IndusXCart - AI & Voice Powered E-Commerce
 
 echo ===============================================================
-echo     Compiling & Launching NovaCart (Java 27 SE)
+echo     Compiling & Launching IndusXCart (Java 27 SE)
 echo ===============================================================
 
 if not exist bin mkdir bin
@@ -24,8 +24,9 @@ echo [OK] Compilation successful!
 echo [INFO] Opening http://localhost:8080/ in your browser...
 start http://localhost:8080/
 
-echo [INFO] Starting NovaCart server on port 8080...
+echo [INFO] Starting IndusXCart server on port 8080...
 echo [NOTE] Keep this window OPEN while using the website.
 java -cp bin com.ecommerce.Main 8080
 
 pause
+

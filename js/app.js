@@ -7,10 +7,10 @@
 
 // Generate or retrieve persistent customer session ID
 const SESSION_ID = (() => {
-    let sid = localStorage.getItem('novacart_session_id');
+    let sid = localStorage.getItem('indusxcart_session_id');
     if (!sid) {
         sid = 'session-' + Math.random().toString(36).substring(2, 10);
-        localStorage.setItem('novacart_session_id', sid);
+        localStorage.setItem('indusxcart_session_id', sid);
     }
     return sid;
 })();
@@ -449,7 +449,7 @@ const cartManager = {
         }
 
         // Load local cart from localStorage
-        const stored = localStorage.getItem('novacart_local_cart');
+        const stored = localStorage.getItem('indusxcart_local_cart');
         if (stored) {
             try {
                 this.cart = JSON.parse(stored);
@@ -460,7 +460,7 @@ const cartManager = {
     },
 
     saveLocal() {
-        localStorage.setItem('novacart_local_cart', JSON.stringify(this.cart));
+        localStorage.setItem('indusxcart_local_cart', JSON.stringify(this.cart));
     },
 
     recalculate() {
@@ -1313,4 +1313,5 @@ window.addEventListener('DOMContentLoaded', () => {
     app.init();
     voiceAssistant.init();
 });
+
 

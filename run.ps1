@@ -1,9 +1,9 @@
-# PowerShell script to compile and run NovaCart
+﻿# PowerShell script to compile and run IndusXCart
 $ErrorActionPreference = "Stop"
 Set-Location -Path $PSScriptRoot
 
 Write-Host "===============================================================" -ForegroundColor Cyan
-Write-Host "     Compiling & Launching NovaCart (Java 27 SE)" -ForegroundColor Cyan
+Write-Host "     Compiling & Launching IndusXCart (Java 27 SE)" -ForegroundColor Cyan
 Write-Host "===============================================================" -ForegroundColor Cyan
 
 if (-not (Test-Path "bin")) {
@@ -22,3 +22,4 @@ if ($LASTEXITCODE -eq 0) {
 } else {
     Write-Host "[ERROR] Compilation failed." -ForegroundColor Red
 }
+
